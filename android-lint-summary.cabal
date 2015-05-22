@@ -23,6 +23,7 @@ executable android-lint-summary
                      , hxt
                      , HandsomeSoup
                      , rainbow
+                     , lens
   default-language:    Haskell2010
   Ghc-options:         -Wall
                        -fwarn-tabs

@@ -1,11 +1,8 @@
-{-# LANGUAGE OverloadedStrings #-}
-
-import qualified Data.Text as T
-
-import qualified Rainbow as R
+import Rainbow
 import qualified Rainbow.Types as Y
+
+import Control.Lens
 
 main :: IO ()
 main = do
-    R.putChunkLn $ Y.chunkFromLazyText "Some blue text" & fore blue
-    putStrLn "Hi there."
+    putChunkLn $ chunk "hello" & fore blue
