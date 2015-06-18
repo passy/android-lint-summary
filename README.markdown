@@ -7,7 +7,7 @@ A summary view for Android Lint errors.
 ## Running
 
 ```bash
-$ cabal sandbox init
-$ stackage-install
-$ cabal run
+$ stack setup
+$ stack build
+$ stack exec android-lint-summary
 ```
