@@ -1,0 +1,6 @@
+flags:
+  android-lint-summary: {}
+packages:
+- '.'
+extra-deps: []
+resolver: nightly-2015-06-17

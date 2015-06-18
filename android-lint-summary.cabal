@@ -24,6 +24,8 @@ executable android-lint-summary
                      , HandsomeSoup
                      , rainbow
                      , lens
+                     , filemanip
+                     , directory
   default-language:    Haskell2010
   Ghc-options:         -Wall
                        -fwarn-tabs
