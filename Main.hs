@@ -1,11 +1,10 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, Arrows #-}
 
 import qualified Data.Text as T
 
 import Rainbow
 import System.Directory
 import Text.XML.HXT.Core
-import Data.Tree.NTree.TypeDefs
 
 import Data.Foldable (forM_)
 import Data.Stringable (Stringable(..))
@@ -24,6 +23,7 @@ data LintSeverity = FatalSeverity
 
 data LintIssue = LintIssue { severity :: LintSeverity
                            , summary :: String
+                           , priority :: Int
                            }
     deriving (Eq, Show)
 
@@ -49,25 +49,29 @@ instance Stringable LintSeverity where
         | otherwise = error "Invalid severity"
     length _ = 0
 
-formatLintResults :: FilePath -> IO ()
+formatLintResults :: FilePath -> IO [LintIssue]
 formatLintResults filename = do
     contents <- readFile filename
     let doc = readString [withWarnings yes] contents
-    xmlIssues <- runX $ doc >>> selectIssues >>. (fmap readIssue)
-    print $ xmlIssues
+    runX $ doc >>> selectIssues >>> parseIssues
     where
-        readIssue :: XmlTree -> Either String LintIssue
-        readIssue (NTree (XTag name trees) _) = pure $ LintIssue ErrorSeverity "yo"
-        readIssue n@_ = fail $ "Parse Error: Invalid issue " ++ show n
+        parseIssues = proc i -> do
+            severity' <- getAttrValue "severity" -< i
+            summary' <- getAttrValue "summary" -< i
+            priority' <- arr read <<< getAttrValue "priority" -< i
+            returnA -< LintIssue { severity = fromString severity'
+                                , summary = summary'
+                                , priority = priority'
+                                }
 
-selectIssues :: ArrowXml a => a XmlTree XmlTree
-selectIssues = getChildren
-    >>>
-    isElem >>> hasName "issues"
-    >>>
-    hasAttrValue "format" (== supportedLintFormatVersion)
-    >>>
-    (deep $ isElem >>> hasName "issue")
+        selectIssues :: ArrowXml a => a XmlTree XmlTree
+        selectIssues = getChildren
+            >>>
+            isElem >>> hasName "issues"
+            >>>
+            hasAttrValue "format" (== supportedLintFormatVersion)
+            >>>
+            (deep $ isElem >>> hasName "issue")
 
 main :: IO ()
 main = do
