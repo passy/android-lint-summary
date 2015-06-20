@@ -53,15 +53,16 @@ formatLintResults :: FilePath -> IO ()
 formatLintResults filename = do
     contents <- readFile filename
     let doc = readString [withWarnings yes] contents
-    xmlIssues <- runX $ doc >>> selectIssues
-    print $ readIssue <$> xmlIssues
+    xmlIssues <- runX $ doc >>> selectIssues >>. (fmap readIssue)
+    print $ xmlIssues
     where
         readIssue :: XmlTree -> Either String LintIssue
         readIssue (NTree (XTag name trees) _) = pure $ LintIssue ErrorSeverity "yo"
         readIssue n@_ = fail $ "Parse Error: Invalid issue " ++ show n
 
 selectIssues :: ArrowXml a => a XmlTree XmlTree
-selectIssues = deep $
+selectIssues = getChildren
+    >>>
     isElem >>> hasName "issues"
     >>>
     hasAttrValue "format" (== supportedLintFormatVersion)
