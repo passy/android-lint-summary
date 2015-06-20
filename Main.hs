@@ -51,6 +51,14 @@ instance Stringable LintSeverity where
         | otherwise = error "Invalid severity"
     length _ = 0
 
+class LintFormatter a where
+    formatLintIssues :: a -> [LintIssue] -> String
+
+data NullLintFormatter
+
+instance LintFormatter NullLintFormatter where
+    formatLintIssues _ _ = ""
+
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filename = do
     contents <- readFile filename
