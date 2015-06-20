@@ -7,6 +7,8 @@ import System.Directory
 import Text.XML.HXT.Core
 
 import Data.Foldable (forM_)
+import Data.Traversable (forM)
+import Data.List (sortOn)
 import Data.Stringable (Stringable(..))
 
 import qualified System.FilePath.Find as Find
@@ -49,8 +51,8 @@ instance Stringable LintSeverity where
         | otherwise = error "Invalid severity"
     length _ = 0
 
-formatLintResults :: FilePath -> IO [LintIssue]
-formatLintResults filename = do
+readLintIssues :: FilePath -> IO [LintIssue]
+readLintIssues filename = do
     contents <- readFile filename
     let doc = readString [withWarnings yes] contents
     runX $ doc >>> selectIssues >>> parseIssues
@@ -73,9 +75,16 @@ formatLintResults filename = do
             >>>
             (deep $ isElem >>> hasName "issue")
 
+printLintIssue :: LintIssue -> IO ()
+printLintIssue lrs = do
+  printC $  (toString $ severity lrs) <> ": " <> summary lrs
+  where
+      printC = putChunkLn . colorSeverity (severity lrs) . chunk
+
 main :: IO ()
 main = do
     dir <- getCurrentDirectory
     files <- Find.find Find.always (Find.fileName Find.~~? "lint-results.xml") dir
-    forM_ files formatLintResults
-    -- forM_ files (\x -> putChunkLn $ chunk x & fore blue)
+    lintIssues <- forM files readLintIssues
+    let sortedLintIssues = sortOn priority (concat lintIssues)
+    forM_ sortedLintIssues printLintIssue
