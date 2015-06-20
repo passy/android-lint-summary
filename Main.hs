@@ -77,9 +77,9 @@ readLintIssues filename = do
 
 printLintIssue :: LintIssue -> IO ()
 printLintIssue lrs = do
-  printC $  (toString $ severity lrs) <> ": " <> summary lrs
-  where
-      printC = putChunkLn . colorSeverity (severity lrs) . chunk
+    printC $  (toString $ severity lrs) <> ": " <> summary lrs
+    where
+        printC = putChunkLn . colorSeverity (severity lrs) . chunk
 
 main :: IO ()
 main = do
