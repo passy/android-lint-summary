@@ -56,13 +56,13 @@ formatLintResults filename = do
     runX $ doc >>> selectIssues >>> parseIssues
     where
         parseIssues = proc i -> do
-            severity' <- getAttrValue "severity" -< i
+            severity' <- arr fromString <<< getAttrValue "severity" -< i
             summary' <- getAttrValue "summary" -< i
             priority' <- arr read <<< getAttrValue "priority" -< i
-            returnA -< LintIssue { severity = fromString severity'
-                                , summary = summary'
-                                , priority = priority'
-                                }
+            returnA -< LintIssue { severity = severity'
+                                 , summary = summary'
+                                 , priority = priority'
+                                 }
 
         selectIssues :: ArrowXml a => a XmlTree XmlTree
         selectIssues = getChildren
