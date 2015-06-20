@@ -21,11 +21,11 @@ executable android-lint-summary
   build-depends:       base ==4.*
                      , text
                      , hxt
-                     , HandsomeSoup
                      , rainbow
                      , lens
                      , filemanip
                      , directory
+                     , stringable
   default-language:    Haskell2010
   Ghc-options:         -Wall
                        -fwarn-tabs
