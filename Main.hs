@@ -56,8 +56,9 @@ formatLintResults filename = do
     xmlIssues <- runX $ doc >>> selectIssues
     print $ readIssue <$> xmlIssues
     where
-        readIssue :: XmlTree -> LintIssue
-        readIssue (NTree (XTag name trees) _) = LintIssue ErrorSeverity "Hi"
+        readIssue :: XmlTree -> Either String LintIssue
+        readIssue (NTree (XTag name trees) _) = pure $ LintIssue ErrorSeverity "yo"
+        readIssue n@_ = fail $ "Parse Error: Invalid issue " ++ show n
 
 selectIssues :: ArrowXml a => a XmlTree XmlTree
 selectIssues = deep $
