@@ -74,8 +74,9 @@ instance LintFormatter SimpleLintFormatter where
             sortedIssues = sortOn priority issues
             fmt i = [ label i
                     , chunk $ " " <> summary i <> "\n"
+                    , chunk ("\t" <> T.pack (filename $ location i) <> "\n") & faint
                     ]
-            label i = dye i $ ("[" <> (T.take 1 $ toText $ severity i) <> "]")
+            label i = dye i ("[" <> T.take 1 (toText $ severity i) <> "]")
             dye = (. chunk) . colorSeverity . severity
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree

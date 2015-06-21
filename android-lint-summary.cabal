@@ -32,6 +32,7 @@ executable android-lint-summary
                        -fwarn-incomplete-record-updates
                        -fwarn-monomorphism-restriction
                        -fwarn-unused-do-bind
+                       -fwarn-missing-import-lists
 
 Test-Suite hspec-tests
   main-is:             Tests/Main.hs
