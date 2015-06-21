@@ -23,9 +23,16 @@ data LintSeverity = FatalSeverity
                   | InformationalSeverity
     deriving (Eq, Ord, Show)
 
+data LintLocation = LintLocation { filename :: FilePath
+                                 , line :: Int
+                                 , column :: Int
+                                 }
+    deriving (Eq, Show)
+
 data LintIssue = LintIssue { severity :: LintSeverity
                            , summary :: String
                            , priority :: Int
+                           , location :: LintLocation
                            }
     deriving (Eq, Show)
 
@@ -59,20 +66,36 @@ data NullLintFormatter
 instance LintFormatter NullLintFormatter where
     formatLintIssues _ _ = ""
 
+atTag :: ArrowXml a => String -> a XmlTree XmlTree
+atTag tag = deep (isElem >>> hasName tag)
+
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filename = do
     contents <- readFile filename
     let doc = readString [withWarnings yes] contents
     runX $ doc >>> selectIssues >>> parseIssues
     where
+        parseIssues :: ArrowXml a => a XmlTree LintIssue
         parseIssues = proc i -> do
             severity' <- arr fromString <<< getAttrValue "severity" -< i
             summary' <- getAttrValue "summary" -< i
             priority' <- arr read <<< getAttrValue "priority" -< i
+            location' <- parseLocation -< i
             returnA -< LintIssue { severity = severity'
                                  , summary = summary'
                                  , priority = priority'
+                                 , location = location'
                                  }
+
+        parseLocation :: ArrowXml a => a XmlTree LintLocation
+        parseLocation = atTag "location" >>> proc l -> do
+            filename' <- getAttrValue "file" -< l
+            line' <- arr read <<< getAttrValue "line" -< l
+            column' <- arr read <<< getAttrValue "column" -< l
+            returnA -< LintLocation { filename = filename'
+                                    , line = line'
+                                    , column = column'
+                                    }
 
         selectIssues :: ArrowXml a => a XmlTree XmlTree
         selectIssues = getChildren
