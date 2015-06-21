@@ -1,6 +1,6 @@
-{-# LANGUAGE OverloadedStrings, Arrows #-}
+{-# LANGUAGE OverloadedStrings, Arrows, ExistentialQuantification #-}
 
-import qualified Data.Text as T
+-- import qualified Data.Text as T
 
 import Rainbow
 import System.Directory
@@ -59,12 +59,27 @@ instance Stringable LintSeverity where
     length _ = 0
 
 class LintFormatter a where
-    formatLintIssues :: a -> [LintIssue] -> String
+    formatLintIssues :: a -> [LintIssue] -> [Chunk String]
 
-data NullLintFormatter
+-- | A formatter that doesn't output anything.
+data NullLintFormatter = NullLintFormatter
+
+-- | A formatter that displays the errors in descending errors
+--   with simple color coding.
+data SimpleLintFormatter = SimpleLintFormatter
 
 instance LintFormatter NullLintFormatter where
-    formatLintIssues _ _ = ""
+    formatLintIssues _ _ = pure mempty
+
+instance LintFormatter SimpleLintFormatter where
+    formatLintIssues _ issues = concat $ fmt <$> sortedIssues
+        where
+            sortedIssues = sortOn priority issues
+            fmt i = [ label i
+                    , chunk $ " " <> summary i <> "\n"
+                    ]
+            label i = dye i $ ("[" <> (take 1 $ toString $ severity i) <> "]")
+            dye = (. chunk) . colorSeverity . severity
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
@@ -116,6 +131,8 @@ main :: IO ()
 main = do
     dir <- getCurrentDirectory
     files <- Find.find Find.always (Find.fileName Find.~~? "lint-results.xml") dir
-    lintIssues <- forM files readLintIssues
-    let sortedLintIssues = sortOn priority (concat lintIssues)
-    forM_ sortedLintIssues printLintIssue
+    lintIssues <- concat <$> forM files readLintIssues
+    let sortedLintIssues = sortOn priority lintIssues
+    -- To be based on CLI arguments later
+    let formatter = SimpleLintFormatter
+    mapM_ putChunk (formatLintIssues formatter lintIssues)
