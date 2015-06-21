@@ -74,10 +74,20 @@ instance LintFormatter SimpleLintFormatter where
             sortedIssues = sortOn priority issues
             fmt i = [ label i
                     , chunk $ " " <> summary i <> "\n"
-                    , chunk ("\t" <> T.pack (filename $ location i) <> "\n") & faint
+                    , chunk ( "\t"
+                            <> T.pack (filename $ location i)
+                            <> ":"
+                            <> tshow (line $ location i)
+                            <> "\n"
+                            ) & faint
                     ]
-            label i = dye i ("[" <> T.take 1 (toText $ severity i) <> "]")
+            label i = dye i ( "["
+                            <> T.take 1 (toText $ severity i)
+                            <> "]" )
             dye = (. chunk) . colorSeverity . severity
+
+tshow :: (Show s) => s -> T.Text
+tshow = T.pack . show
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
