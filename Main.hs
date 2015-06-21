@@ -1,18 +1,15 @@
 {-# LANGUAGE OverloadedStrings, Arrows, ExistentialQuantification #-}
 
--- import qualified Data.Text as T
-
 import Rainbow
-import System.Directory
 import Text.XML.HXT.Core
 
-import Data.Foldable (forM_)
-import Data.Traversable (forM)
 import Data.List (sortOn)
 import Data.Stringable (Stringable(..))
+import Data.Traversable (forM)
+import System.Directory (getCurrentDirectory)
 
 import qualified System.FilePath.Find as Find
-
+import qualified Data.Text as T
 
 supportedLintFormatVersion :: String
 supportedLintFormatVersion = "4"
@@ -30,7 +27,7 @@ data LintLocation = LintLocation { filename :: FilePath
     deriving (Eq, Show)
 
 data LintIssue = LintIssue { severity :: LintSeverity
-                           , summary :: String
+                           , summary :: T.Text
                            , priority :: Int
                            , location :: LintLocation
                            }
@@ -59,7 +56,7 @@ instance Stringable LintSeverity where
     length _ = 0
 
 class LintFormatter a where
-    formatLintIssues :: a -> [LintIssue] -> [Chunk String]
+    formatLintIssues :: a -> [LintIssue] -> [Chunk T.Text]
 
 -- | A formatter that doesn't output anything.
 data NullLintFormatter = NullLintFormatter
@@ -78,7 +75,7 @@ instance LintFormatter SimpleLintFormatter where
             fmt i = [ label i
                     , chunk $ " " <> summary i <> "\n"
                     ]
-            label i = dye i $ ("[" <> (take 1 $ toString $ severity i) <> "]")
+            label i = dye i $ ("[" <> (T.take 1 $ toText $ severity i) <> "]")
             dye = (. chunk) . colorSeverity . severity
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
@@ -93,7 +90,7 @@ readLintIssues filename = do
         parseIssues :: ArrowXml a => a XmlTree LintIssue
         parseIssues = proc i -> do
             severity' <- arr fromString <<< getAttrValue "severity" -< i
-            summary' <- getAttrValue "summary" -< i
+            summary' <- arr T.pack <<< getAttrValue "summary" -< i
             priority' <- arr read <<< getAttrValue "priority" -< i
             location' <- parseLocation -< i
             returnA -< LintIssue { severity = severity'
@@ -121,18 +118,11 @@ readLintIssues filename = do
             >>>
             atTag "issue"
 
-printLintIssue :: LintIssue -> IO ()
-printLintIssue lrs = do
-    printC $  (toString $ severity lrs) <> ": " <> summary lrs
-    where
-        printC = putChunkLn . colorSeverity (severity lrs) . chunk
-
 main :: IO ()
 main = do
     dir <- getCurrentDirectory
     files <- Find.find Find.always (Find.fileName Find.~~? "lint-results.xml") dir
     lintIssues <- concat <$> forM files readLintIssues
-    let sortedLintIssues = sortOn priority lintIssues
     -- To be based on CLI arguments later
     let formatter = SimpleLintFormatter
     mapM_ putChunk (formatLintIssues formatter lintIssues)
