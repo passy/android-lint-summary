@@ -104,7 +104,7 @@ readLintIssues filename = do
             >>>
             hasAttrValue "format" (== supportedLintFormatVersion)
             >>>
-            (deep $ isElem >>> hasName "issue")
+            atTag "issue"
 
 printLintIssue :: LintIssue -> IO ()
 printLintIssue lrs = do
