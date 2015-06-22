@@ -1,9 +1,12 @@
-{-# LANGUAGE OverloadedStrings, Arrows, ExistentialQuantification #-}
+{-# LANGUAGE OverloadedStrings, Arrows, ExistentialQuantification, NoImplicitPrelude #-}
+
+import BasicPrelude hiding (fromString)
 
 import Rainbow
 import Text.XML.HXT.Core
 
 import Data.List (sortOn)
+import Text.Read (readMaybe)
 import Data.Stringable (Stringable(..))
 import Data.Traversable (forM)
 import System.Directory (getCurrentDirectory)
@@ -77,7 +80,7 @@ instance LintFormatter SimpleLintFormatter where
                     , chunk ( "\t"
                             <> T.pack (filename $ location i)
                             <> ":"
-                            <> tshow (line $ location i)
+                            <> show (line $ location i)
                             <> "\n"
                             ) & faint
                     ]
@@ -86,23 +89,23 @@ instance LintFormatter SimpleLintFormatter where
                             <> "]" )
             dye = (. chunk) . colorSeverity . severity
 
-tshow :: (Show s) => s -> T.Text
-tshow = T.pack . show
-
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
+
+sread :: forall a. Read a => String -> a
+sread = read . T.pack
 
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filename = do
     contents <- readFile filename
-    let doc = readString [withWarnings yes] contents
+    let doc = readString [withWarnings yes] $ T.unpack contents
     runX $ doc >>> selectIssues >>> parseIssues
     where
         parseIssues :: ArrowXml a => a XmlTree LintIssue
         parseIssues = proc i -> do
             severity' <- arr fromString <<< getAttrValue "severity" -< i
             summary' <- arr T.pack <<< getAttrValue "summary" -< i
-            priority' <- arr read <<< getAttrValue "priority" -< i
+            priority' <- arr sread <<< getAttrValue "priority" -< i
             location' <- parseLocation -< i
             returnA -< LintIssue { severity = severity'
                                  , summary = summary'
@@ -113,8 +116,8 @@ readLintIssues filename = do
         parseLocation :: ArrowXml a => a XmlTree LintLocation
         parseLocation = atTag "location" >>> proc l -> do
             filename' <- getAttrValue "file" -< l
-            line' <- arr read <<< getAttrValue "line" -< l
-            column' <- arr read <<< getAttrValue "column" -< l
+            line' <- arr sread <<< getAttrValue "line" -< l
+            column' <- arr sread <<< getAttrValue "column" -< l
             returnA -< LintLocation { filename = filename'
                                     , line = line'
                                     , column = column'
