@@ -5,10 +5,7 @@ import BasicPrelude hiding (fromString)
 import Rainbow
 import Text.XML.HXT.Core
 
-import Data.List (sortOn)
-import Text.Read (readMaybe)
 import Data.Stringable (Stringable(..))
-import Data.Traversable (forM)
 import System.Directory (getCurrentDirectory)
 
 import qualified System.FilePath.Find as Find
@@ -24,8 +21,8 @@ data LintSeverity = FatalSeverity
     deriving (Eq, Ord, Show)
 
 data LintLocation = LintLocation { filename :: FilePath
-                                 , line :: Int
-                                 , column :: Int
+                                 , line :: Maybe Int
+                                 , column :: Maybe Int
                                  }
     deriving (Eq, Show)
 
@@ -79,11 +76,11 @@ instance LintFormatter SimpleLintFormatter where
                     , chunk $ " " <> summary i <> "\n"
                     , chunk ( "\t"
                             <> T.pack (filename $ location i)
-                            <> ":"
-                            <> show (line $ location i)
+                            <> fmtLine (line $ location i)
                             <> "\n"
                             ) & faint
                     ]
+            fmtLine = maybe mempty ((":" <>) . show)
             label i = dye i ( "["
                             <> T.take 1 (toText $ severity i)
                             <> "]" )
@@ -94,6 +91,9 @@ atTag tag = deep (isElem >>> hasName tag)
 
 sread :: forall a. Read a => String -> a
 sread = read . T.pack
+
+sreadMay :: forall a. Read a => String -> Maybe a
+sreadMay = readMay . T.pack
 
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filename = do
@@ -116,8 +116,8 @@ readLintIssues filename = do
         parseLocation :: ArrowXml a => a XmlTree LintLocation
         parseLocation = atTag "location" >>> proc l -> do
             filename' <- getAttrValue "file" -< l
-            line' <- arr sread <<< getAttrValue "line" -< l
-            column' <- arr sread <<< getAttrValue "column" -< l
+            line' <- arr sreadMay <<< getAttrValue "line" -< l
+            column' <- arr sreadMay <<< getAttrValue "column" -< l
             returnA -< LintLocation { filename = filename'
                                     , line = line'
                                     , column = column'
