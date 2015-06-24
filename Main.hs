@@ -4,8 +4,10 @@ import BasicPrelude hiding (fromString)
 
 import Rainbow
 import Text.XML.HXT.Core
+import Options.Applicative
 
 import Data.Stringable (Stringable(..))
+import Data.Default (Default(), def)
 import System.Directory (getCurrentDirectory)
 import System.FilePath.GlobPattern (GlobPattern)
 
@@ -136,11 +138,42 @@ readLintIssues filepath = do
             >>>
             atTag "issue"
 
+data Verbosity = Normal | Verbose
+    deriving (Show, Eq)
+
+data AppArgs = AppArgs { pattern :: GlobPattern
+                       , verbose :: Verbosity
+                       }
+    deriving (Show)
+
+instance Default AppArgs where
+    def = AppArgs { pattern = defaultLintResultsGlob
+                  , verbose = Normal
+                  }
+
+appArgs :: Parser AppArgs
+appArgs = AppArgs
+    <$> strOption ( long "glob"
+                 <> help "Glob pattern to select result files"
+                 <> (value $ pattern $ def)
+                 <> showDefault )
+    <*> flag Normal Verbose ( long "verbose"
+                           <> short 'v'
+                           <> help "Enable verbose mode" )
+
 main :: IO ()
-main = do
-    dir <- getCurrentDirectory
-    files <- Find.find Find.always (Find.filePath Find.~~? defaultLintResultsGlob) dir
-    lintIssues <- concat <$> forM files readLintIssues
-    -- To be based on CLI arguments later
-    let formatter = SimpleLintFormatter
-    mapM_ putChunk (formatLintIssues formatter lintIssues)
+main = execParser opts >>= run
+  where
+    opts = info (helper <*> appArgs)
+        ( fullDesc
+       <> progDesc "Format Android Lint XML output nicely"
+       <> header "android-lint-summary - a lint-results.xml pretty printer" )
+
+    run :: AppArgs -> IO ()
+    run args = do
+        dir <- getCurrentDirectory
+        files <- Find.find Find.always (Find.filePath Find.~~? pattern args) dir
+        lintIssues <- concat <$> forM files readLintIssues
+        -- To be based on CLI arguments later
+        let formatter = SimpleLintFormatter
+        mapM_ putChunk (formatLintIssues formatter lintIssues)
