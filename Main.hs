@@ -7,6 +7,7 @@ import Text.XML.HXT.Core
 
 import Data.Stringable (Stringable(..))
 import System.Directory (getCurrentDirectory)
+import System.FilePath.GlobPattern (GlobPattern)
 
 import qualified System.FilePath.Find as Find
 import qualified Data.Text as T
@@ -99,8 +100,8 @@ sreadMay :: forall a. Read a => String -> Maybe a
 sreadMay = readMay . T.pack
 
 readLintIssues :: FilePath -> IO [LintIssue]
-readLintIssues filename = do
-    contents <- readFile filename
+readLintIssues filepath = do
+    contents <- readFile filepath
     let doc = readString [withWarnings yes] $ T.unpack contents
     runX $ doc >>> selectIssues >>> parseIssues
     where
