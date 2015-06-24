@@ -135,7 +135,7 @@ readLintIssues filename = do
 main :: IO ()
 main = do
     dir <- getCurrentDirectory
-    files <- Find.find Find.always (Find.fileName Find.~~? "lint-results.xml") dir
+    files <- Find.find ((< 2) `liftM` Find.depth) (Find.fileName Find.~~? "lint-results.xml") dir
     lintIssues <- concat <$> forM files readLintIssues
     -- To be based on CLI arguments later
     let formatter = SimpleLintFormatter
