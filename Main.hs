@@ -35,6 +35,7 @@ data LintLocation = LintLocation { filename :: FilePath
 data LintIssue = LintIssue { severity :: LintSeverity
                            , summary :: T.Text
                            , priority :: Int
+                           , explanation :: T.Text
                            , location :: LintLocation
                            }
     deriving (Eq, Show)
@@ -61,10 +62,12 @@ instance Stringable LintSeverity where
         | otherwise = error "Invalid severity"
     length _ = 0
 
-data LintFormatter = NullLintFormatter -- ^ A formatter that doesn't output
-                                       -- anything.
-                   | SimpleLintFormatter -- ^ A formatter that displays the errors in descending errors
-                                         --   with simple color coding.
+data LintFormatter =
+    NullLintFormatter -- ^ A formatter that doesn't output
+                      --   anything.
+  | SimpleLintFormatter -- ^ A formatter that displays the errors
+                        --   in descending errors with simple color
+                        --   coding.
   deriving (Show)
 
 instance Stringable LintFormatter where
@@ -76,19 +79,27 @@ instance Stringable LintFormatter where
       | otherwise = error "Invalid LintFormatter specification"
     length _ = 0
 
-formatLintIssues :: LintFormatter -> [LintIssue] -> [Chunk T.Text]
-formatLintIssues NullLintFormatter _ = pure mempty
-formatLintIssues SimpleLintFormatter issues = concat $ fmt <$> sortedIssues
+formatLintIssues :: LintFormatter -> Verbosity -> [LintIssue] -> [Chunk T.Text]
+formatLintIssues NullLintFormatter _ _ = pure mempty
+formatLintIssues SimpleLintFormatter v issues = concat $ fmt <$> sortedIssues
     where
         sortedIssues = sortOn priority issues
         fmt i = [ label i
-                , chunk $ " " <> summary i <> "\n"
+                , chunk (" " <> summary i <> "\n") & bold
                 , chunk ( "\t"
                         <> T.pack (filename $ location i)
                         <> fmtLine (line $ location i)
                         <> "\n"
-                        ) & faint
+                        ) & underline & fore blue
+                , fmtExplanation i
                 ]
+        fmtExplanation :: LintIssue -> Chunk T.Text
+        fmtExplanation i = case v of
+          Normal -> mempty
+          Verbose -> chunk ( "\t"
+                           <> explanation i
+                           <> "\n"
+                           ) & faint
         fmtLine = maybe mempty ((":" <>) . show)
         label i = dye i ( "["
                         <> T.take 1 (toText $ severity i)
@@ -115,9 +126,11 @@ readLintIssues filepath = do
             severity' <- arr fromString <<< getAttrValue "severity" -< i
             summary' <- arr T.pack <<< getAttrValue "summary" -< i
             priority' <- arr sread <<< getAttrValue "priority" -< i
+            explanation' <- arr T.pack <<< getAttrValue "explanation" -< i
             location' <- parseLocation -< i
             returnA -< LintIssue { severity = severity'
                                  , summary = summary'
+                                 , explanation = explanation'
                                  , priority = priority'
                                  , location = location'
                                  }
@@ -186,4 +199,4 @@ main = execParser opts >>= run
         dir <- getCurrentDirectory
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args) dir
         lintIssues <- concat <$> forM files readLintIssues
-        mapM_ putChunk (formatLintIssues (formatter args) lintIssues)
+        mapM_ putChunk (formatLintIssues (formatter args) (verbose args) lintIssues)
