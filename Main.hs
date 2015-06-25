@@ -83,25 +83,24 @@ instance Stringable LintFormatter where
 
 formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
 formatLintIssues NullLintFormatter _ = pure mempty
-formatLintIssues SimpleLintFormatter issues = concat `liftM` mapM fmt sortedIssues
+formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
     where
         sortedIssues = sortOn priority issues
 
         fmt :: LintIssue -> Reader AppEnv [Chunk T.Text]
-        fmt i = do
-          v <- asks (verbose . args)
-          return [ label i
-                 , chunk (" " <> summary i <> "\n") & bold
-                 , chunk ( "\t"
-                        <> T.pack (filename $ location i)
-                        <> fmtLine (line $ location i)
-                        <> "\n"
-                         ) & underline & fore blue
-                 , fmtExplanation v i
-                 ]
+        fmt i =
+          sequence [ pure $ label i
+                   , pure $ chunk (" " <> summary i <> "\n") & bold
+                   , pure $ chunk ( "\t"
+                                   <> T.pack (filename $ location i)
+                                   <> fmtLine (line $ location i)
+                                   <> "\n"
+                                    ) & underline & fore blue
+                   , fmtExplanation i
+                   ]
 
-        fmtExplanation :: Verbosity -> LintIssue -> Chunk T.Text
-        fmtExplanation v i = case v of
+        fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
+        fmtExplanation i = asks (verbose . args) >>= \v -> return $ case v of
           Normal -> mempty
           Verbose -> chunk ( "\t"
                            <> explanation i
@@ -111,8 +110,8 @@ formatLintIssues SimpleLintFormatter issues = concat `liftM` mapM fmt sortedIssu
         fmtLine = maybe mempty ((":" <>) . show)
 
         label i = dye i ( "["
-                        <> T.take 1 (toText $ severity i)
-                        <> "]" )
+                       <> T.take 1 (toText $ severity i)
+                       <> "]" )
 
         dye = (. chunk) . colorSeverity . severity
 
