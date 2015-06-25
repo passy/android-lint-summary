@@ -88,6 +88,7 @@ formatLintIssues SimpleLintFormatter issues = do
     return . concat $ fmt v <$> sortedIssues
     where
         sortedIssues = sortOn priority issues
+
         fmt :: Verbosity -> LintIssue -> [Chunk T.Text]
         fmt v i = [ label i
                   , chunk (" " <> summary i <> "\n") & bold
@@ -98,6 +99,7 @@ formatLintIssues SimpleLintFormatter issues = do
                           ) & underline & fore blue
                   , fmtExplanation v i
                   ]
+
         fmtExplanation :: Verbosity -> LintIssue -> Chunk T.Text
         fmtExplanation v i = case v of
           Normal -> mempty
@@ -105,10 +107,13 @@ formatLintIssues SimpleLintFormatter issues = do
                            <> explanation i
                            <> "\n"
                            ) & faint
+
         fmtLine = maybe mempty ((":" <>) . show)
+
         label i = dye i ( "["
                         <> T.take 1 (toText $ severity i)
                         <> "]" )
+
         dye = (. chunk) . colorSeverity . severity
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
