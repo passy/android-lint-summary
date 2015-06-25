@@ -7,8 +7,10 @@ import Text.XML.HXT.Core
 import Options.Applicative
 
 import Control.Monad.Reader (runReader, asks, Reader())
-import Data.Stringable (Stringable(..))
 import Data.Default (Default(), def)
+import Data.Stringable (Stringable(..))
+import Data.Version (showVersion)
+import Paths_android_lint_summary (version)
 import System.Directory (getCurrentDirectory)
 import System.FilePath.GlobPattern (GlobPattern)
 
@@ -202,10 +204,16 @@ appArgs = AppArgs
 main :: IO ()
 main = execParser opts >>= run
   where
-    opts = info (helper <*> appArgs)
+    opts = info (helper <*> appArgs <**> versionInfo)
         ( fullDesc
        <> progDesc "Format Android Lint XML output nicely"
        <> header "android-lint-summary - a lint-results.xml pretty printer" )
+
+    versionInfo = infoOption ("android-lint-summary " ++ showVersion version)
+      ( short 'V'
+     <> long "version"
+     <> hidden
+     <> help "Show version information" )
 
     run :: AppArgs -> IO ()
     run args' = do
