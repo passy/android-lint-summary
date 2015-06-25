@@ -83,22 +83,22 @@ instance Stringable LintFormatter where
 
 formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
 formatLintIssues NullLintFormatter _ = pure mempty
-formatLintIssues SimpleLintFormatter issues = do
-    v <- asks (verbose . args)
-    return . concat $ fmt v <$> sortedIssues
+formatLintIssues SimpleLintFormatter issues = concat `liftM` mapM fmt sortedIssues
     where
         sortedIssues = sortOn priority issues
 
-        fmt :: Verbosity -> LintIssue -> [Chunk T.Text]
-        fmt v i = [ label i
-                  , chunk (" " <> summary i <> "\n") & bold
-                  , chunk ( "\t"
-                         <> T.pack (filename $ location i)
-                         <> fmtLine (line $ location i)
-                         <> "\n"
-                          ) & underline & fore blue
-                  , fmtExplanation v i
-                  ]
+        fmt :: LintIssue -> Reader AppEnv [Chunk T.Text]
+        fmt i = do
+          v <- asks (verbose . args)
+          return [ label i
+                 , chunk (" " <> summary i <> "\n") & bold
+                 , chunk ( "\t"
+                        <> T.pack (filename $ location i)
+                        <> fmtLine (line $ location i)
+                        <> "\n"
+                         ) & underline & fore blue
+                 , fmtExplanation v i
+                 ]
 
         fmtExplanation :: Verbosity -> LintIssue -> Chunk T.Text
         fmtExplanation v i = case v of
@@ -212,7 +212,7 @@ main = execParser opts >>= run
     run args' = do
         dir <- getCurrentDirectory
         size <- Terminal.size
-        let env = AppEnv args' terminalSize
+        let env = AppEnv args' size
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
         lintIssues <- concat <$> forM files readLintIssues
         mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env
