@@ -161,13 +161,13 @@ appArgs = AppArgs
     <$> strOption ( long "glob"
                  <> short 'g'
                  <> help "Glob pattern to select result files"
-                 <> (value $ pattern $ def)
+                 <> value (pattern def)
                  <> showDefault )
     <*> ( fromString <$>
           strOption ( long "formatter"
                    <> short 'f'
                    <> help "Specify a formatter to use [simple|null]"
-                   <> (value . toString . formatter $ def)
+                   <> value (toString . formatter $ def)
                    <> showDefault ) )
     <*> flag Normal Verbose ( long "verbose"
                            <> short 'v'
