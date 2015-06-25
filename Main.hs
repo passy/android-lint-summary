@@ -82,10 +82,10 @@ instance Stringable LintFormatter where
     length _ = 0
 
 formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
-formatLintIssues NullLintFormatter _ = return $ pure mempty
+formatLintIssues NullLintFormatter _ = pure mempty
 formatLintIssues SimpleLintFormatter issues = do
     v <- asks (verbose . args)
-    return $ concat $ (fmt v <$> sortedIssues)
+    return . concat $ fmt v <$> sortedIssues
     where
         sortedIssues = sortOn priority issues
         fmt :: Verbosity -> LintIssue -> [Chunk T.Text]
@@ -206,7 +206,7 @@ main = execParser opts >>= run
     run :: AppArgs -> IO ()
     run args' = do
         dir <- getCurrentDirectory
-        terminalSize <- Terminal.size
+        size <- Terminal.size
         let env = AppEnv args' terminalSize
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
         lintIssues <- concat <$> forM files readLintIssues
