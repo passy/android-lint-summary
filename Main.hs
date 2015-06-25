@@ -61,36 +61,39 @@ instance Stringable LintSeverity where
         | otherwise = error "Invalid severity"
     length _ = 0
 
-class LintFormatter a where
-    formatLintIssues :: a -> [LintIssue] -> [Chunk T.Text]
+data LintFormatter = NullLintFormatter -- ^ A formatter that doesn't output
+                                       -- anything.
+                   | SimpleLintFormatter -- ^ A formatter that displays the errors in descending errors
+                                         --   with simple color coding.
+  deriving (Show)
 
--- | A formatter that doesn't output anything.
-data NullLintFormatter = NullLintFormatter
+instance Stringable LintFormatter where
+    toString NullLintFormatter = "null"
+    toString SimpleLintFormatter = "simple"
+    fromString s
+      | s == "null" = NullLintFormatter
+      | s == "simple" = SimpleLintFormatter
+      | otherwise = error "Invalid LintFormatter specification"
+    length _ = 0
 
--- | A formatter that displays the errors in descending errors
---   with simple color coding.
-data SimpleLintFormatter = SimpleLintFormatter
-
-instance LintFormatter NullLintFormatter where
-    formatLintIssues _ _ = pure mempty
-
-instance LintFormatter SimpleLintFormatter where
-    formatLintIssues _ issues = concat $ fmt <$> sortedIssues
-        where
-            sortedIssues = sortOn priority issues
-            fmt i = [ label i
-                    , chunk $ " " <> summary i <> "\n"
-                    , chunk ( "\t"
-                            <> T.pack (filename $ location i)
-                            <> fmtLine (line $ location i)
-                            <> "\n"
-                            ) & faint
-                    ]
-            fmtLine = maybe mempty ((":" <>) . show)
-            label i = dye i ( "["
-                            <> T.take 1 (toText $ severity i)
-                            <> "]" )
-            dye = (. chunk) . colorSeverity . severity
+formatLintIssues :: LintFormatter -> [LintIssue] -> [Chunk T.Text]
+formatLintIssues NullLintFormatter _ = pure mempty
+formatLintIssues SimpleLintFormatter issues = concat $ fmt <$> sortedIssues
+    where
+        sortedIssues = sortOn priority issues
+        fmt i = [ label i
+                , chunk $ " " <> summary i <> "\n"
+                , chunk ( "\t"
+                        <> T.pack (filename $ location i)
+                        <> fmtLine (line $ location i)
+                        <> "\n"
+                        ) & faint
+                ]
+        fmtLine = maybe mempty ((":" <>) . show)
+        label i = dye i ( "["
+                        <> T.take 1 (toText $ severity i)
+                        <> "]" )
+        dye = (. chunk) . colorSeverity . severity
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
@@ -142,21 +145,30 @@ data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
 data AppArgs = AppArgs { pattern :: GlobPattern
+                       , formatter :: LintFormatter
                        , verbose :: Verbosity
                        }
     deriving (Show)
 
 instance Default AppArgs where
     def = AppArgs { pattern = defaultLintResultsGlob
+                  , formatter = SimpleLintFormatter
                   , verbose = Normal
                   }
 
 appArgs :: Parser AppArgs
 appArgs = AppArgs
     <$> strOption ( long "glob"
+                 <> short 'g'
                  <> help "Glob pattern to select result files"
                  <> (value $ pattern $ def)
                  <> showDefault )
+    <*> ( fromString <$>
+          strOption ( long "formatter"
+                   <> short 'f'
+                   <> help "Specify a formatter to use [simple|null]"
+                   <> (value . toString . formatter $ def)
+                   <> showDefault ) )
     <*> flag Normal Verbose ( long "verbose"
                            <> short 'v'
                            <> help "Enable verbose mode" )
@@ -174,6 +186,4 @@ main = execParser opts >>= run
         dir <- getCurrentDirectory
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args) dir
         lintIssues <- concat <$> forM files readLintIssues
-        -- To be based on CLI arguments later
-        let formatter = SimpleLintFormatter
-        mapM_ putChunk (formatLintIssues formatter lintIssues)
+        mapM_ putChunk (formatLintIssues (formatter args) lintIssues)
