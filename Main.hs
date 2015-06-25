@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, Arrows, ExistentialQuantification, NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude #-}
 
 import BasicPrelude hiding (fromString)
 
@@ -6,6 +6,7 @@ import Rainbow
 import Text.XML.HXT.Core
 import Options.Applicative
 
+import Control.Monad.Reader (runReader, asks, Reader())
 import Data.Stringable (Stringable(..))
 import Data.Default (Default(), def)
 import System.Directory (getCurrentDirectory)
@@ -13,6 +14,7 @@ import System.FilePath.GlobPattern (GlobPattern)
 
 import qualified System.FilePath.Find as Find
 import qualified Data.Text as T
+import qualified System.Console.Terminal.Size as Terminal
 
 supportedLintFormatVersion :: String
 supportedLintFormatVersion = "4"
@@ -79,22 +81,25 @@ instance Stringable LintFormatter where
       | otherwise = error "Invalid LintFormatter specification"
     length _ = 0
 
-formatLintIssues :: LintFormatter -> Verbosity -> [LintIssue] -> [Chunk T.Text]
-formatLintIssues NullLintFormatter _ _ = pure mempty
-formatLintIssues SimpleLintFormatter v issues = concat $ fmt <$> sortedIssues
+formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
+formatLintIssues NullLintFormatter _ = return $ pure mempty
+formatLintIssues SimpleLintFormatter issues = do
+    v <- asks (verbose . args)
+    return $ concat $ (fmt v <$> sortedIssues)
     where
         sortedIssues = sortOn priority issues
-        fmt i = [ label i
-                , chunk (" " <> summary i <> "\n") & bold
-                , chunk ( "\t"
-                        <> T.pack (filename $ location i)
-                        <> fmtLine (line $ location i)
-                        <> "\n"
-                        ) & underline & fore blue
-                , fmtExplanation i
-                ]
-        fmtExplanation :: LintIssue -> Chunk T.Text
-        fmtExplanation i = case v of
+        fmt :: Verbosity -> LintIssue -> [Chunk T.Text]
+        fmt v i = [ label i
+                  , chunk (" " <> summary i <> "\n") & bold
+                  , chunk ( "\t"
+                         <> T.pack (filename $ location i)
+                         <> fmtLine (line $ location i)
+                         <> "\n"
+                          ) & underline & fore blue
+                  , fmtExplanation v i
+                  ]
+        fmtExplanation :: Verbosity -> LintIssue -> Chunk T.Text
+        fmtExplanation v i = case v of
           Normal -> mempty
           Verbose -> chunk ( "\t"
                            <> explanation i
@@ -109,10 +114,10 @@ formatLintIssues SimpleLintFormatter v issues = concat $ fmt <$> sortedIssues
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
 
-sread :: forall a. Read a => String -> a
+sread :: Read a => String -> a
 sread = read . T.pack
 
-sreadMay :: forall a. Read a => String -> Maybe a
+sreadMay :: Read a => String -> Maybe a
 sreadMay = readMay . T.pack
 
 readLintIssues :: FilePath -> IO [LintIssue]
@@ -163,6 +168,10 @@ data AppArgs = AppArgs { pattern :: GlobPattern
                        }
     deriving (Show)
 
+data AppEnv = AppEnv { args :: AppArgs
+                     , terminalSize :: Maybe (Terminal.Window Integer)
+                     }
+
 instance Default AppArgs where
     def = AppArgs { pattern = defaultLintResultsGlob
                   , formatter = SimpleLintFormatter
@@ -195,8 +204,10 @@ main = execParser opts >>= run
        <> header "android-lint-summary - a lint-results.xml pretty printer" )
 
     run :: AppArgs -> IO ()
-    run args = do
+    run args' = do
         dir <- getCurrentDirectory
-        files <- Find.find Find.always (Find.filePath Find.~~? pattern args) dir
+        terminalSize <- Terminal.size
+        let env = AppEnv args' terminalSize
+        files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
         lintIssues <- concat <$> forM files readLintIssues
-        mapM_ putChunk (formatLintIssues (formatter args) (verbose args) lintIssues)
+        mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env

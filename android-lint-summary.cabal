@@ -29,6 +29,8 @@ executable android-lint-summary
                      , basic-prelude
                      , optparse-applicative
                      , data-default
+                     , terminal-size
+                     , mtl
   default-language:    Haskell2010
   Ghc-options:         -Wall
                        -fwarn-tabs
