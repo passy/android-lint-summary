@@ -129,9 +129,10 @@ indentWrap size indentation text = foldMap wrap lines'
   where
     lines' = filter (/= mempty) $ lines text
     indent = concat $ replicate indentation " "
-    wrap t =
-      let (as, bs) = T.splitAt (Terminal.width size - indentation) t
-      in indent <> as <> "\n" <> indent <> bs <> "\n"
+    wrap t
+      | t == mempty = mempty
+      | otherwise = let (as, bs) = T.splitAt (Terminal.width size - indentation) t
+                    in indent <> as <> "\n" <> wrap bs
 
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filepath = do
