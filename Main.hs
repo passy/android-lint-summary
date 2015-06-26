@@ -6,7 +6,8 @@ import Rainbow
 import Text.XML.HXT.Core
 import Options.Applicative
 
-import Control.Monad.Reader (runReader, asks, Reader())
+import Control.Monad.Reader (runReader, asks, ask, Reader())
+import Data.Maybe (fromJust) -- EEEK, remove this!
 import Data.Default (Default(), def)
 import Data.Stringable (Stringable(..))
 import Data.Version (showVersion)
@@ -93,7 +94,7 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
         fmt i =
           sequence [ pure $ label i
                    , pure $ chunk (" " <> summary i <> "\n") & bold
-                   , pure $ chunk ( "\t"
+                   , pure $ chunk ( (concat $ replicate 3 " ")
                                    <> T.pack (filename $ location i)
                                    <> fmtLine (line $ location i)
                                    <> "\n"
@@ -102,10 +103,9 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
                    ]
 
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
-        fmtExplanation i = asks (verbose . args) >>= \v -> return $ case v of
+        fmtExplanation i = ask >>= \env -> return $ case (verbose $ args env) of
           Normal -> mempty
-          Verbose -> chunk ( "\t"
-                           <> explanation i
+          Verbose -> chunk (indentWrap (fromJust $ terminalSize env) 3 $ explanation i
                            <> "\n"
                            ) & faint
 
@@ -125,6 +125,15 @@ sread = read . T.pack
 
 sreadMay :: Read a => String -> Maybe a
 sreadMay = readMay . T.pack
+
+indentWrap :: Terminal.Window Int -> Int -> T.Text -> T.Text
+indentWrap size indentation text = foldMap wrap lines'
+  where
+    lines' = lines text
+    indent = concat $ replicate indentation " "
+    wrap t =
+      let (as, bs) = T.splitAt (Terminal.width size - indentation) t
+      in indent <> as <> "\n" <> bs
 
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filepath = do
@@ -175,7 +184,7 @@ data AppArgs = AppArgs { pattern :: GlobPattern
     deriving (Show)
 
 data AppEnv = AppEnv { args :: AppArgs
-                     , terminalSize :: Maybe (Terminal.Window Integer)
+                     , terminalSize :: Maybe (Terminal.Window Int)
                      }
 
 instance Default AppArgs where
