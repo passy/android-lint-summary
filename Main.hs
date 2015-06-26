@@ -6,8 +6,7 @@ import Rainbow
 import Text.XML.HXT.Core
 import Options.Applicative
 
-import Control.Monad.Reader (runReader, asks, ask, Reader())
-import Data.Maybe (fromJust) -- EEEK, remove this!
+import Control.Monad.Reader (runReader, ask, Reader())
 import Data.Default (Default(), def)
 import Data.Stringable (Stringable(..))
 import Data.Version (showVersion)
@@ -88,7 +87,7 @@ formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
 formatLintIssues NullLintFormatter _ = pure mempty
 formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
     where
-        sortedIssues = sortOn priority issues
+        sortedIssues = sortOn ((* (-1)) . priority) issues
 
         fmt :: LintIssue -> Reader AppEnv [Chunk T.Text]
         fmt i =
@@ -105,7 +104,12 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
         fmtExplanation i = ask >>= \env -> return $ case (verbose $ args env) of
           Normal -> mempty
-          Verbose -> chunk (indentWrap (fromJust $ terminalSize env) 4 $ explanation i) & faint
+          Verbose -> ( chunk $
+            maybe
+              (explanation i)
+              (\size -> indentWrap size 4 $ explanation i)
+              (terminalSize env)
+            ) & faint
 
         fmtLine = maybe mempty ((":" <>) . show)
 
