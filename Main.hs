@@ -94,8 +94,8 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
         fmt i =
           sequence [ pure $ label i
                    , pure $ chunk (" " <> summary i <> "\n") & bold
-                   , pure $ chunk ( (concat $ replicate 3 " ")
-                                   <> T.pack (filename $ location i)
+                   , pure $ chunk $ concat $ replicate 4 " "
+                   , pure $ chunk ( T.pack (filename $ location i)
                                    <> fmtLine (line $ location i)
                                    <> "\n"
                                     ) & underline & fore blue
@@ -105,9 +105,7 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
         fmtExplanation i = ask >>= \env -> return $ case (verbose $ args env) of
           Normal -> mempty
-          Verbose -> chunk (indentWrap (fromJust $ terminalSize env) 3 $ explanation i
-                           <> "\n"
-                           ) & faint
+          Verbose -> chunk (indentWrap (fromJust $ terminalSize env) 4 $ explanation i) & faint
 
         fmtLine = maybe mempty ((":" <>) . show)
 
@@ -129,11 +127,11 @@ sreadMay = readMay . T.pack
 indentWrap :: Terminal.Window Int -> Int -> T.Text -> T.Text
 indentWrap size indentation text = foldMap wrap lines'
   where
-    lines' = lines text
+    lines' = filter (/= mempty) $ lines text
     indent = concat $ replicate indentation " "
     wrap t =
       let (as, bs) = T.splitAt (Terminal.width size - indentation) t
-      in indent <> as <> "\n" <> bs
+      in indent <> as <> "\n" <> indent <> bs <> "\n"
 
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filepath = do
