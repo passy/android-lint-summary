@@ -144,7 +144,7 @@ openXMLFile filepath = do
     return $ readString [withWarnings yes] $ T.unpack contents
 
 readLintIssues :: IOSLA (XIOState ()) XmlTree XmlTree -> IO [LintIssue]
-readLintIssues doc = do
+readLintIssues doc =
     runX $ doc >>> selectIssues >>> parseIssues
     where
         parseIssues :: ArrowXml a => a XmlTree LintIssue
