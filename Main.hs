@@ -236,6 +236,5 @@ main = execParser opts >>= run
         size <- Terminal.size
         let env = AppEnv args' size
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
-        docs <- forM files openXMLFile
-        lintIssues <- concat <$> forM docs readLintIssues
+        lintIssues <- concat <$> forM files (\f -> openXMLFile f >>= readLintIssues)
         mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env
