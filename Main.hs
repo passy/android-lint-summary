@@ -44,6 +44,52 @@ data LintIssue = LintIssue { severity :: LintSeverity
                            }
     deriving (Eq, Show)
 
+data LintFormatter =
+    NullLintFormatter -- ^ A formatter that doesn't output
+                      --   anything.
+  | SimpleLintFormatter -- ^ A formatter that displays the errors
+                        --   in descending errors with simple color
+                        --   coding.
+  deriving (Show)
+
+data Verbosity = Normal | Verbose
+    deriving (Show, Eq)
+
+data AppArgs = AppArgs { pattern :: GlobPattern
+                       , formatter :: LintFormatter
+                       , verbose :: Verbosity
+                       }
+    deriving (Show)
+
+data AppEnv = AppEnv { args :: AppArgs
+                     , terminalSize :: Maybe (Terminal.Window Int)
+                     }
+instance Default AppArgs where
+    def = AppArgs { pattern = defaultLintResultsGlob
+                  , formatter = SimpleLintFormatter
+                  , verbose = Normal
+                  }
+
+instance Stringable LintSeverity where
+    toString = formatSeverity
+    fromString s
+        | s == "Fatal" = FatalSeverity
+        | s == "Error" = ErrorSeverity
+        | s == "Warning" = WarningSeverity
+        | s == "Informational" = InformationalSeverity
+        | otherwise = error "Invalid severity"
+    length _ = 0
+
+
+instance Stringable LintFormatter where
+    toString NullLintFormatter = "null"
+    toString SimpleLintFormatter = "simple"
+    fromString s
+      | s == "null" = NullLintFormatter
+      | s == "simple" = SimpleLintFormatter
+      | otherwise = error "Invalid LintFormatter specification"
+    length _ = 0
+
 formatSeverity :: LintSeverity -> String
 formatSeverity FatalSeverity         = "Fatal"
 formatSeverity ErrorSeverity         = "Error"
@@ -56,32 +102,6 @@ colorSeverity ErrorSeverity         a = a & fore red
 colorSeverity WarningSeverity       a = a & fore yellow
 colorSeverity InformationalSeverity a = a & fore white
 
-instance Stringable LintSeverity where
-    toString = formatSeverity
-    fromString s
-        | s == "Fatal" = FatalSeverity
-        | s == "Error" = ErrorSeverity
-        | s == "Warning" = WarningSeverity
-        | s == "Informational" = InformationalSeverity
-        | otherwise = error "Invalid severity"
-    length _ = 0
-
-data LintFormatter =
-    NullLintFormatter -- ^ A formatter that doesn't output
-                      --   anything.
-  | SimpleLintFormatter -- ^ A formatter that displays the errors
-                        --   in descending errors with simple color
-                        --   coding.
-  deriving (Show)
-
-instance Stringable LintFormatter where
-    toString NullLintFormatter = "null"
-    toString SimpleLintFormatter = "simple"
-    fromString s
-      | s == "null" = NullLintFormatter
-      | s == "simple" = SimpleLintFormatter
-      | otherwise = error "Invalid LintFormatter specification"
-    length _ = 0
 
 formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
 formatLintIssues NullLintFormatter _ = pure mempty
@@ -179,25 +199,6 @@ readLintIssues doc =
             hasAttrValue "format" (== supportedLintFormatVersion)
             >>>
             atTag "issue"
-
-data Verbosity = Normal | Verbose
-    deriving (Show, Eq)
-
-data AppArgs = AppArgs { pattern :: GlobPattern
-                       , formatter :: LintFormatter
-                       , verbose :: Verbosity
-                       }
-    deriving (Show)
-
-data AppEnv = AppEnv { args :: AppArgs
-                     , terminalSize :: Maybe (Terminal.Window Int)
-                     }
-
-instance Default AppArgs where
-    def = AppArgs { pattern = defaultLintResultsGlob
-                  , formatter = SimpleLintFormatter
-                  , verbose = Normal
-                  }
 
 appArgs :: Parser AppArgs
 appArgs = AppArgs
