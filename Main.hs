@@ -102,10 +102,10 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
                    ]
 
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
-        fmtExplanation i = ask >>= \env -> return $ case (verbose $ args env) of
+        fmtExplanation i = ask >>= \env -> return $ case verbose $ args env of
           Normal -> mempty
-          Verbose -> ( chunk $
-            maybe
+          Verbose -> chunk
+            ( maybe
               (explanation i)
               (\size -> indentWrap size 4 $ explanation i)
               (terminalSize env)
