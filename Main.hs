@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude, ExistentialQuantification #-}
 
 import BasicPrelude hiding (fromString)
 
@@ -138,10 +138,14 @@ indentWrap size indentation text = foldMap wrap lines'
       | otherwise = let (as, bs) = T.splitAt (Terminal.width size - indentation) t
                     in indent <> as <> "\n" <> wrap bs
 
+openXMLFile :: forall s b. FilePath -> IO (IOStateArrow s b XmlTree)
+openXMLFile filepath = do
+    contents <- readFile filepath
+    return $ readString [withWarnings yes] $ T.unpack contents
+
 readLintIssues :: FilePath -> IO [LintIssue]
 readLintIssues filepath = do
-    contents <- readFile filepath
-    let doc = readString [withWarnings yes] $ T.unpack contents
+    doc <- openXMLFile filepath
     runX $ doc >>> selectIssues >>> parseIssues
     where
         parseIssues :: ArrowXml a => a XmlTree LintIssue
