@@ -143,9 +143,8 @@ openXMLFile filepath = do
     contents <- readFile filepath
     return $ readString [withWarnings yes] $ T.unpack contents
 
-readLintIssues :: FilePath -> IO [LintIssue]
-readLintIssues filepath = do
-    doc <- openXMLFile filepath
+readLintIssues :: IOSLA (XIOState ()) XmlTree XmlTree -> IO [LintIssue]
+readLintIssues doc = do
     runX $ doc >>> selectIssues >>> parseIssues
     where
         parseIssues :: ArrowXml a => a XmlTree LintIssue
@@ -237,5 +236,6 @@ main = execParser opts >>= run
         size <- Terminal.size
         let env = AppEnv args' size
         files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
-        lintIssues <- concat <$> forM files readLintIssues
+        docs <- forM files openXMLFile
+        lintIssues <- concat <$> forM docs readLintIssues
         mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env
