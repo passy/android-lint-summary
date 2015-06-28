@@ -15,10 +15,39 @@ source-repository head
   type:              git
   location:          https://github.com/passy/android-lint-summary.git
 
+library
+  exposed-modules:     AndroidLintSummary
+  hs-source-dirs:      src
+  other-extensions:    OverloadedStrings
+                     , Arrows
+                     , NoImplicitPrelude
+                     , ExistentialQuantification
+  build-depends:       base ==4.*
+                     , text
+                     , hxt
+                     , rainbow
+                     , lens
+                     , filemanip
+                     , directory
+                     , stringable
+                     , basic-prelude
+                     , optparse-applicative
+                     , data-default
+                     , terminal-size
+                     , mtl
+  default-language:    Haskell2010
+  Ghc-options:         -Wall
+                       -fwarn-tabs
+                       -fwarn-incomplete-record-updates
+                       -fwarn-monomorphism-restriction
+                       -fwarn-unused-do-bind
+                       -- -fwarn-missing-import-lists
+
 executable android-lint-summary
   main-is:             Main.hs
   other-extensions:    OverloadedStrings
   build-depends:       base ==4.*
+                     , android-lint-summary
                      , text
                      , hxt
                      , rainbow
@@ -44,5 +73,18 @@ Test-Suite hspec-tests
   type:                exitcode-stdio-1.0
   default-language:    Haskell2010
   build-depends:       base >=4.7 && <4.9
+                     , android-lint-summary
                      , hspec
                      , QuickCheck
+                     , text
+                     , hxt
+                     , rainbow
+                     , lens
+                     , filemanip
+                     , directory
+                     , stringable
+                     , basic-prelude
+                     , optparse-applicative
+                     , data-default
+                     , terminal-size
+                     , mtl
