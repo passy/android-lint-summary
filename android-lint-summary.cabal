@@ -1,5 +1,5 @@
 name:                android-lint-summary
-version:             0.2
+version:             0.2.1
 synopsis:            A summary for Android-Lint errors
 description:         An easily digestible overview of errors and warnings from Android Lint.
 homepage:            https://github.com/passy/android-lint-summary
