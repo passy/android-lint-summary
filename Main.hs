@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude, ExistentialQuantification #-}
+{-# LANGUAGE OverloadedStrings, NoImplicitPrelude #-}
 
 module Main where
 
