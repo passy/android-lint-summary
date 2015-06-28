@@ -71,8 +71,10 @@ Test-Suite hspec-tests
   type:                exitcode-stdio-1.0
   default-language:    Haskell2010
   build-depends:       base >=4.7 && <4.9
+                     , QuickCheck
                      , android-lint-summary
                      , basic-prelude
-                     , stringable
+                     , directory
                      , hspec
-                     , QuickCheck
+                     , hxt
+                     , stringable

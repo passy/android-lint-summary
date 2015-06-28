@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings, NoImplicitPrelude, ExistentialQuantification #-}
 module Main where
 
 import BasicPrelude hiding (fromString)
@@ -10,6 +10,8 @@ import Test.QuickCheck.Monadic
 
 import AndroidLintSummary
 import Data.Stringable (Stringable(toString, fromString))
+import System.Directory (getCurrentDirectory)
+import Text.XML.HXT.Core
 
 
 instance Arbitrary LintSeverity where
@@ -24,8 +26,10 @@ allSeverities = [minBound ..]
 allFormatters :: [LintFormatter]
 allFormatters = [minBound ..]
 
-purifyException :: (a -> IO b) -> a -> IO (Maybe b)
-purifyException f x = protect (const Nothing) $ return . Just =<< f x
+openFixture :: forall s b. FilePath -> IO (IOStateArrow s b XmlTree)
+openFixture path = do
+    dir <- getCurrentDirectory
+    openXMLFile $ dir </> "Tests" </> "fixtures" </> path
 
 main :: IO ()
 main = hspec $ do
@@ -36,3 +40,25 @@ main = hspec $ do
     describe "LintFormatter" $ do
         it "fromString . toString = id" . property $ do
           \x -> (fromString . toString) x == (x :: LintFormatter)
+
+    describe "XML Parser" $ do
+        it "reads an empty file" $ do
+            file <- liftIO . openFixture $ "0" </> "app" </> "build" </> "outputs" </> "lint-results.xml"
+            issues <- liftIO $ readLintIssues file
+
+            issues `shouldBe` mempty
+
+        it "reads a non-empty file" $ do
+            file <- liftIO . openFixture $ "1" </> "lint-results.xml"
+            issues <- liftIO $ readLintIssues file
+
+            length issues `shouldBe` 2
+
+            let iss0 = issues !! 0
+            severity iss0 `shouldBe` WarningSeverity
+            priority iss0 `shouldBe` 6
+
+            let loc0 = location iss0
+            filename loc0 `shouldBe` "/home/pascal/Projects/java/Android-DirectoryChooser/library/build.gradle"
+            line loc0 `shouldBe` Just 25
+            column loc0 `shouldBe` Just 5
