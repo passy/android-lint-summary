@@ -1,5 +1,18 @@
 {-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude, ExistentialQuantification #-}
-module AndroidLintSummary where
+module AndroidLintSummary (
+  supportedLintFormatVersion
+, AppEnv(..)
+, AppArgs(..)
+, LintSeverity(..)
+, LintFormatter(..)
+, LintLocation(..)
+, LintIssue(..)
+, Verbosity(..)
+, readLintIssues
+, openXMLFile
+, indentWrap
+, formatLintIssues
+) where
 
 import BasicPrelude hiding (fromString)
 
