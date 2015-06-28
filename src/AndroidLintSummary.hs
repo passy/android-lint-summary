@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude, ExistentialQuantification #-}
+-- | Parsers and pretty printers for the `lint-results.xml` file format.
 module AndroidLintSummary (
   supportedLintFormatVersion
 , AppEnv(..)
