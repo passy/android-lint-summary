@@ -5,16 +5,12 @@ import BasicPrelude hiding (fromString)
 
 import Rainbow
 import Text.XML.HXT.Core
-import Options.Applicative
 
-import Control.Monad.Reader (runReader, ask, Reader())
+import Control.Monad.Reader (ask, Reader())
 import Data.Default (Default(), def)
 import Data.Stringable (Stringable(..))
-import Data.Version (showVersion)
-import Paths_android_lint_summary (version)
 import System.FilePath.GlobPattern (GlobPattern)
 
-import qualified System.FilePath.Find as Find
 import qualified Data.Text as T
 import qualified System.Console.Terminal.Size as Terminal
 
@@ -28,7 +24,7 @@ data LintSeverity = FatalSeverity
                   | ErrorSeverity
                   | WarningSeverity
                   | InformationalSeverity
-    deriving (Eq, Ord, Show)
+    deriving (Eq, Ord, Show, Bounded, Enum)
 
 data LintLocation = LintLocation { filename :: FilePath
                                  , line :: Maybe Int
@@ -50,7 +46,7 @@ data LintFormatter =
   | SimpleLintFormatter -- ^ A formatter that displays the errors
                         --   in descending errors with simple color
                         --   coding.
-  deriving (Show)
+  deriving (Eq, Show, Bounded, Enum)
 
 data Verbosity = Normal | Verbose
     deriving (Show, Eq)
@@ -77,7 +73,7 @@ instance Stringable LintSeverity where
         | s == "Error" = ErrorSeverity
         | s == "Warning" = WarningSeverity
         | s == "Informational" = InformationalSeverity
-        | otherwise = error "Invalid severity"
+        | otherwise = error $ "Invalid severity " <> s
     length _ = 0
 
 
