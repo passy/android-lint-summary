@@ -15,22 +15,49 @@ source-repository head
   type:              git
   location:          https://github.com/passy/android-lint-summary.git
 
+library
+  exposed-modules:     AndroidLintSummary
+  hs-source-dirs:      src
+  other-extensions:    OverloadedStrings
+                     , Arrows
+                     , NoImplicitPrelude
+                     , ExistentialQuantification
+  build-depends:       base ==4.*
+                     , basic-prelude
+                     , data-default
+                     , directory
+                     , filemanip
+                     , hxt
+                     , lens
+                     , mtl
+                     , optparse-applicative
+                     , rainbow
+                     , stringable
+                     , terminal-size
+                     , text
+  default-language:    Haskell2010
+  Ghc-options:         -Wall
+                       -fwarn-tabs
+                       -fwarn-incomplete-record-updates
+                       -fwarn-monomorphism-restriction
+                       -fwarn-unused-do-bind
+                       -- -fwarn-missing-import-lists
+
 executable android-lint-summary
   main-is:             Main.hs
   other-extensions:    OverloadedStrings
   build-depends:       base ==4.*
-                     , text
-                     , hxt
-                     , rainbow
-                     , lens
-                     , filemanip
-                     , directory
-                     , stringable
+                     , android-lint-summary
                      , basic-prelude
-                     , optparse-applicative
                      , data-default
-                     , terminal-size
+                     , directory
+                     , filemanip
                      , mtl
+                     , optparse-applicative
+                     , rainbow
+                     , stringable
+                     , terminal-size
+                     , text
   default-language:    Haskell2010
   Ghc-options:         -Wall
                        -fwarn-tabs
@@ -44,5 +71,10 @@ Test-Suite hspec-tests
   type:                exitcode-stdio-1.0
   default-language:    Haskell2010
   build-depends:       base >=4.7 && <4.9
-                     , hspec
                      , QuickCheck
+                     , android-lint-summary
+                     , basic-prelude
+                     , directory
+                     , hspec
+                     , hxt
+                     , stringable
