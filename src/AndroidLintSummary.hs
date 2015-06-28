@@ -12,7 +12,6 @@ import Data.Default (Default(), def)
 import Data.Stringable (Stringable(..))
 import Data.Version (showVersion)
 import Paths_android_lint_summary (version)
-import System.Directory (getCurrentDirectory)
 import System.FilePath.GlobPattern (GlobPattern)
 
 import qualified System.FilePath.Find as Find

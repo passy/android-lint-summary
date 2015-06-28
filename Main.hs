@@ -8,16 +8,14 @@ import Rainbow
 import Options.Applicative
 import AndroidLintSummary
 
-import Control.Monad.Reader (runReader, ask, Reader())
-import Data.Default (Default(), def)
-import Data.Stringable (Stringable(..))
+import Control.Monad.Reader (runReader)
+import Data.Default (def)
 import Data.Version (showVersion)
 import Paths_android_lint_summary (version)
 import System.Directory (getCurrentDirectory)
-import System.FilePath.GlobPattern (GlobPattern)
+import Data.Stringable (Stringable(fromString, toString))
 
 import qualified System.FilePath.Find as Find
-import qualified Data.Text as T
 import qualified System.Console.Terminal.Size as Terminal
 
 appArgs :: Parser AppArgs
