@@ -54,7 +54,7 @@ main = hspec $ do
 
             length issues `shouldBe` 2
 
-            let iss0 = issues !! 0
+            let iss0 = head issues
             severity iss0 `shouldBe` WarningSeverity
             priority iss0 `shouldBe` 6
 

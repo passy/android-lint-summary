@@ -44,10 +44,10 @@ main = execParser opts >>= run
        <> header "android-lint-summary - a lint-results.xml pretty printer" )
 
     versionInfo = infoOption ("android-lint-summary " ++ showVersion version)
-      ( short 'V'
-     <> long "version"
-     <> hidden
-     <> help "Show version information" )
+        ( short 'V'
+       <> long "version"
+       <> hidden
+       <> help "Show version information" )
 
     run :: AppArgs -> IO ()
     run args' = do
