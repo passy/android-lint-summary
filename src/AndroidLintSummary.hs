@@ -15,7 +15,7 @@ module AndroidLintSummary (
 , formatLintIssues
 ) where
 
-import BasicPrelude hiding (fromString, filename)
+import BasicPrelude hiding (fromString)
 
 import Rainbow
 import Text.XML.HXT.Core
