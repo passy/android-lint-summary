@@ -24,6 +24,14 @@ $ stack setup
 $ stack stack install
 ```
 
+## Using
+
+```
+$ cd my-android-project
+$ ./gradle lint
+$ android-lint-summary
+```
+
 ## `--help`
 
 ```bash
@@ -44,10 +52,11 @@ Available options:
   -V,--version             Show version information
 ```
 
-## Running
+## Developing
 
 ```bash
 $ stack setup
 $ stack build
+$ stack test
 $ stack exec android-lint-summary
 ```
