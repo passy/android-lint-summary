@@ -4,6 +4,13 @@ View your Android lint issues in style.
 
 ![Screenshot](resources/screenshot.png)
 
+## Features
+
+- Combines multiple projects into one output. You no longer need to check each
+  and every of your subproject's lint results for errors.
+- View all your issues nicely formatted in your terminal.
+- Default arguments that do what you probably want them to.
+
 ## Installation
 
 Grab the latest build for your platform from the [releases page](https://github.com/passy/android-lint-summary/releases).
