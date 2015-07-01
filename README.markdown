@@ -32,6 +32,10 @@ $ ./gradle lint
 $ android-lint-summary
 ```
 
+Watch this ASCIICast to see it in action:
+
+[![asciicast](https://asciinema.org/a/22800.png)](https://asciinema.org/a/22800)
+
 ## `--help`
 
 ```bash
