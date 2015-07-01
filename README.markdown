@@ -2,7 +2,7 @@
 
 View your Android lint issues in style.
 
-![Screenshot](resources/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/passy/android-lint-summary/master/resources/screenshot.png)
 
 ## Features
 
