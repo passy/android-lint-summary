@@ -1,25 +1,28 @@
 language: haskell
+sudo: false
 ghc:
   - '7.8'
+env:
+  global:
+    - SNAPSHOT_VERSION: 'nightly-2015-06-17'
+    - GHC_VERSION: '7.10.1'
+    - STACK_RELEASE: 'https://github.com/commercialhaskell/stack/releases/download/v0.1.1.0/stack-0.1.1.0-x86_64-linux.gz'
 
 sudo: false
 cache:
   directories:
-  - $HOME/.stack/snapshots/x86_64-linux/nightly-2015-06-12/7.10.1/
+  - $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/$GHC_VERSION/
 
 before_install:
-  - ls $HOME/.stack/snapshots/x86_64-linux/nightly-2015-06-12/
-  - ls $HOME/.stack/snapshots/x86_64-linux/nightly-2015-06-12/7.10.1/
-  - git clone https://github.com/commercialhaskell/stack
-  - cabal sandbox init
-  - cabal sandbox add-source stack
-  - cabal install stack
-  - mkdir $HOME/bin
-  - cp .cabal-sandbox/bin/stack $HOME/bin
+  - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/
+  - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/$GHC_VERSION/
+  - mkdir -p $HOME/bin
+  - curl -L "$STACK_RELEASE" | gzip -d > $HOME/bin/stack
+  - chmod +x $HOME/bin/stack
 
 install:
-  - ls $HOME/.stack/snapshots/x86_64-linux/nightly-2015-06-12/
-  - ls $HOME/.stack/snapshots/x86_64-linux/nightly-2015-06-12/7.10.1/
+  - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/
+  - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/$GHC_VERSION/
   - stack setup
   - stack test --only-snapshot
 
