@@ -1,0 +1,1441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 23.0.2">
+
+    <issue
+        id="ScrollViewSize"
+        severity="Warning"
+        message="This LinearLayout should use android:layout_height=&quot;wrap_content&quot;"
+        category="Correctness"
+        priority="7"
+        summary="Checks that ScrollViews use `wrap_content` in the scrolling dimension"
+        explanation="ScrollView children must set their `layout_width` or `layout_height` attributes to `wrap_content` rather than `fill_parent` or `match_parent` in the scrolling dimension"
+        errorLine1="         android:layout_height=&quot;fill_parent&quot;"
+        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="56"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ScrollViewSize"
+        severity="Warning"
+        message="This LinearLayout should use android:layout_height=&quot;wrap_content&quot;"
+        category="Correctness"
+        priority="7"
+        summary="Checks that ScrollViews use `wrap_content` in the scrolling dimension"
+        explanation="ScrollView children must set their `layout_width` or `layout_height` attributes to `wrap_content` rather than `fill_parent` or `match_parent` in the scrolling dimension"
+        errorLine1="        android:layout_height=&quot;match_parent&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/splash.xml"
+            line="27"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: javax.inject. Referenced from com.google.android.apps.common.testing.ui.espresso.base.RootViewPicker."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/libs/espresso-1.1.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: javax.servlet.http. Referenced from fi.foyt.foursquare.example.AuthenticationExample."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build/intermediates/exploded-aar/FakeMe/foursquare/unspecified/libs/foursquare-api-1.0.2.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: javax.xml.bind. Referenced from org.scribe.services.DatatypeConverterEncoder."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/.gradle/caches/modules-2/files-2.1/org.scribe/scribe/1.3.5/a3b3deded9d241d9f2c8aa9c9bcd90ad29e2581e/scribe-1.3.5.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: java.lang.management. Referenced from twitter4j.TwitterAPIMonitor."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/.gradle/caches/modules-2/files-2.1/org.twitter4j/twitter4j-core/4.0.2/6555e7c45f5db0006823731b2ddb536d481e11d1/twitter4j-core-4.0.2.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: javax.management. Referenced from twitter4j.TwitterAPIMonitor."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/.gradle/caches/modules-2/files-2.1/org.twitter4j/twitter4j-core/4.0.2/6555e7c45f5db0006823731b2ddb536d481e11d1/twitter4j-core-4.0.2.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        severity="Error"
+        message="Invalid package reference in library; not included in Android: javax.management.openmbean. Referenced from twitter4j.management.APIStatisticsOpenMBean."
+        category="Correctness"
+        priority="6"
+        summary="Finds API accesses to APIs that are not supported in Android"
+        explanation="This check scans through libraries looking for calls to APIs that are not included in Android.
+
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.
+
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.">
+        <location
+            file="/Users/platzerworld/.gradle/caches/modules-2/files-2.1/org.twitter4j/twitter4j-core/4.0.2/6555e7c45f5db0006823731b2ddb536d481e11d1/twitter4j-core-4.0.2.jar"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        severity="Warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+        category="Correctness"
+        priority="6"
+        summary="Checks that the manifest specifies a targetSdkVersion that is recent"
+        explanation="When your application runs on a version of Android that is more recent than your `targetSdkVersion` specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the `targetSdkVersion` is less than 14, your app may get an option button in the UI.
+
+To fix this issue, set the `targetSdkVersion` to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        url="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        urls="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        errorLine1="        targetSdkVersion 19"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="18"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="InflateParams"
+        severity="Warning"
+        message="Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)"
+        category="Correctness"
+        priority="5"
+        summary="Ensures that a proper parent context is passed to a layout inflater"
+        explanation="When inflating a layout, avoid passing in null as the parent view, since otherwise any layout parameters on the root of the inflated layout will be ignored."
+        url="http://www.doubleencore.com/2013/05/layout-inflation-as-intended"
+        urls="http://www.doubleencore.com/2013/05/layout-inflation-as-intended"
+        errorLine1="                view = inflater.inflate(R.layout.listitem, null);"
+        errorLine2="                                                           ~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/java/com/platzerworld/fakefb/SelectionFragment.java"
+            line="1159"
+            column="60"/>
+    </issue>
+
+    <issue
+        id="GradleDynamicVersion"
+        severity="Warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and  unrepeatable builds"
+        category="Correctness"
+        priority="4"
+        summary="Looks for dependencies using a dynamic version rather than a fixed version"
+        explanation="Using `+` in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)"
+        errorLine1="    compile &apos;com.google.android.gms:play-services:+&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="121"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleDynamicVersion"
+        severity="Warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and  unrepeatable builds"
+        category="Correctness"
+        priority="4"
+        summary="Looks for dependencies using a dynamic version rather than a fixed version"
+        explanation="Using `+` in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)"
+        errorLine1="    androidTestCompile &apos;com.squareup:fest-android:1.0.+&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="172"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This versionCode value (1) is not used; it is always overridden by the value specified in the Gradle build script (1)"
+        category="Correctness"
+        priority="4"
+        summary="Looks for values specified in the manifest file which are overridden by values in Gradle"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="    android:versionCode=&quot;1&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/AndroidManifest.xml"
+            line="5"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This versionName value (1.0) is not used; it is always overridden by the value specified in the Gradle build script (1.0)"
+        category="Correctness"
+        priority="4"
+        summary="Looks for values specified in the manifest file which are overridden by values in Gradle"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="    android:versionName=&quot;1.0&quot; >"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/AndroidManifest.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This minSdkVersion value (19) is not used; it is always overridden by the value specified in the Gradle build script (19)"
+        category="Correctness"
+        priority="4"
+        summary="Looks for values specified in the manifest file which are overridden by values in Gradle"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="        android:minSdkVersion=&quot;19&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/AndroidManifest.xml"
+            line="9"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This targetSdkVersion value (21) is not used; it is always overridden by the value specified in the Gradle build script (19)"
+        category="Correctness"
+        priority="4"
+        summary="Looks for values specified in the manifest file which are overridden by values in Gradle"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="        android:targetSdkVersion=&quot;21&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/AndroidManifest.xml"
+            line="10"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.fasterxml.jackson.core:jackson-core than 2.1.4 is available: 2.4.2"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    compile &apos;com.fasterxml.jackson.core:jackson-core:2.1.4&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="134"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.fasterxml.jackson.core:jackson-databind than 2.1.4 is available: 2.4.2"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    compile &apos;com.fasterxml.jackson.core:jackson-databind:2.1.4&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="135"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.fasterxml.jackson.core:jackson-annotations than 2.1.4 is available: 2.3.4"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    compile &apos;com.fasterxml.jackson.core:jackson-annotations:2.1.4&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="136"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.google.guava:guava than 14.0.1 is available: 18"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    androidTestCompile &apos;com.google.guava:guava:14.0.1&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="147"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.squareup.dagger:dagger than 1.1.0 is available: 1.2.2"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    androidTestCompile &apos;com.squareup.dagger:dagger:1.1.0&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="148"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of org.hamcrest:hamcrest-integration than 1.1 is available: 1.3"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    androidTestCompile &apos;org.hamcrest:hamcrest-integration:1.1&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="149"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of org.hamcrest:hamcrest-core than 1.1 is available: 1.3"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    androidTestCompile &apos;org.hamcrest:hamcrest-core:1.1&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="150"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of org.hamcrest:hamcrest-library than 1.1 is available: 1.3"
+        category="Correctness"
+        priority="4"
+        summary="Looks for Gradle library dependencies that can be replaced by newer versions"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.
+This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also *much* slower."
+        errorLine1="    androidTestCompile &apos;org.hamcrest:hamcrest-library:1.1&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/build.gradle"
+            line="151"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ExportedContentProvider"
+        severity="Warning"
+        message="Exported content providers can provide access to potentially sensitive data"
+        category="Security"
+        priority="5"
+        summary="Checks for exported content providers that do not require permissions"
+        explanation="Content providers are exported by default and any application on the system can potentially use them to read and write data. If the content provider provides access to sensitive data, it should be protected by specifying `export=false` in the manifest or by protecting it with a permission that can be granted to other applications."
+        errorLine1="        &lt;provider android:authorities=&quot;com.facebook.app.NativeAppCallContentProvider233936543368280&quot;"
+        errorLine2="        ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/AndroidManifest.xml"
+            line="44"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        severity="Warning"
+        message="This &lt;FrameLayout> can be replaced with a &lt;merge> tag"
+        category="Performance"
+        priority="4"
+        summary="Checks whether a root &lt;FrameLayout> can be replaced with a `&lt;merge>` tag"
+        explanation="If a `&lt;FrameLayout>` is the root of a layout and does not provide background or padding etc, it can often be replaced with a `&lt;merge>` tag which is slightly more efficient. Note that this depends on context, so make sure you understand how the `&lt;merge>` tag works before proceeding."
+        url="http://android-developers.blogspot.com/2009/03/android-layout-tricks-3-optimize-by.html"
+        urls="http://android-developers.blogspot.com/2009/03/android-layout-tricks-3-optimize-by.html"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/activity_main.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        severity="Warning"
+        message="Use a layout_height of 0dp instead of wrap_content for better performance"
+        category="Performance"
+        priority="3"
+        summary="Looks for inefficient weight declarations in LinearLayouts"
+        explanation="When only a single widget in a LinearLayout defines a weight, it is more efficient to assign a width/height of `0dp` to it since it will absorb all the remaining space anyway. With a declared width/height of `0dp` it does not have to measure its own size first."
+        errorLine1="           android:layout_height=&quot;wrap_content&quot;"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="108"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        severity="Warning"
+        message="Possible overdraw: Root element paints background #FB5820 with a theme that also paints a background (inferred theme is @style/AppTheme)"
+        category="Performance"
+        priority="3"
+        summary="Looks for overdraw issues (where a view is painted only to be fully painted over)"
+        explanation="If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called &quot;overdraw&quot;.
+
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it&apos;s currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.
+
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.
+
+Of course it&apos;s possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.
+"
+        errorLine1="    android:background=&quot;#FB5820&quot; >"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="23"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        severity="Warning"
+        message="Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/AppTheme)"
+        category="Performance"
+        priority="3"
+        summary="Looks for overdraw issues (where a view is painted only to be fully painted over)"
+        explanation="If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called &quot;overdraw&quot;.
+
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it&apos;s currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.
+
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.
+
+Of course it&apos;s possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.
+"
+        errorLine1="    android:background=&quot;@color/white&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_example_action.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        severity="Warning"
+        message="Possible overdraw: Root element paints background @color/white with a theme that also paints a background (inferred theme is @style/AppTheme)"
+        category="Performance"
+        priority="3"
+        summary="Looks for overdraw issues (where a view is painted only to be fully painted over)"
+        explanation="If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called &quot;overdraw&quot;.
+
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it&apos;s currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.
+
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.
+
+Of course it&apos;s possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.
+"
+        errorLine1="    android:background=&quot;@color/white&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_invite_all.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        severity="Warning"
+        message="Possible overdraw: Root element paints background #FB5820 with a theme that also paints a background (inferred theme is @style/AppTheme)"
+        category="Performance"
+        priority="3"
+        summary="Looks for overdraw issues (where a view is painted only to be fully painted over)"
+        explanation="If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called &quot;overdraw&quot;.
+
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it&apos;s currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.
+
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.
+
+Of course it&apos;s possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.
+"
+        errorLine1="    android:background=&quot;#FB5820&quot; >"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/splash.xml"
+            line="23"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UselessLeaf"
+        severity="Warning"
+        message="This LinearLayout view is useless (no children, no background, no id, no style)"
+        category="Performance"
+        priority="2"
+        summary="Checks whether a leaf layout can be removed."
+        explanation="A layout that has no children or no background can often be removed (since it is invisible) for a flatter and more efficient layout hierarchy."
+        errorLine1="       &lt;LinearLayout"
+        errorLine2="       ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="100"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="UnusedIds"
+        severity="Warning"
+        message="The resource R.id.textView2 appears to be unused"
+        category="Performance"
+        priority="1"
+        summary="Looks for unused id&apos;s"
+        explanation="This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these."
+        errorLine1="               android:id=&quot;@+id/textView2&quot;"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="84"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="UnusedIds"
+        severity="Warning"
+        message="The resource R.id.info appears to be unused"
+        category="Performance"
+        priority="1"
+        summary="Looks for unused id&apos;s"
+        explanation="This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these."
+        errorLine1="        android:id=&quot;@+id/info&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_example_action.xml"
+            line="12"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedIds"
+        severity="Warning"
+        message="The resource R.id.image_title appears to be unused"
+        category="Performance"
+        priority="1"
+        summary="Looks for unused id&apos;s"
+        explanation="This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these."
+        errorLine1="   android:id=&quot;@+id/image_title&quot;"
+        errorLine2="   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="30"
+            column="4"/>
+    </issue>
+
+    <issue
+        id="UnusedIds"
+        severity="Warning"
+        message="The resource R.id.login_button appears to be unused"
+        category="Performance"
+        priority="1"
+        summary="Looks for unused id&apos;s"
+        explanation="This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these."
+        errorLine1="            android:id=&quot;@+id/login_button&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/splash.xml"
+            line="39"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        severity="Warning"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        category="Usability:Typography"
+        priority="5"
+        summary="Looks for ellipsis strings (...) which can be replaced with an ellipsis character"
+        explanation="You can replace the string &quot;...&quot; with a dedicated ellipsis character, ellipsis character (…, &amp;#8230;). This can help make the text more readable."
+        url="http://en.wikipedia.org/wiki/Ellipsis"
+        urls="http://en.wikipedia.org/wiki/Ellipsis"
+        errorLine1="     &lt;string name=&quot;progress_dialog_text&quot;>Announcing, please wait...&lt;/string>"
+        errorLine2="                                         ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/values/strings.xml"
+            line="32"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        severity="Warning"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        category="Usability:Typography"
+        priority="5"
+        summary="Looks for ellipsis strings (...) which can be replaced with an ellipsis character"
+        explanation="You can replace the string &quot;...&quot; with a dedicated ellipsis character, ellipsis character (…, &amp;#8230;). This can help make the text more readable."
+        url="http://en.wikipedia.org/wiki/Ellipsis"
+        urls="http://en.wikipedia.org/wiki/Ellipsis"
+        errorLine1="    &lt;string name=&quot;load_more&quot;>load more...&lt;/string>"
+        errorLine2="                             ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/values/strings.xml"
+            line="84"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="IconDuplicatesConfig"
+        severity="Warning"
+        message="The ic_launcher.png icon has identical contents in the following configuration folders: drawable-hdpi, drawable"
+        category="Usability:Icons"
+        priority="5"
+        summary="Finds icons that have identical bitmaps across various configuration parameters"
+        explanation="If an icon is provided under different configuration parameters such as `drawable-hdpi` or `-v11`, they should typically be different. This detector catches cases where the same icon is provided in different configuration folder which is usually not intentional.">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/ic_launcher.png"/>
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable-hdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/action_eating.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/action_eating.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/add_food.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/add_food.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/add_friends.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/add_friends.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/add_location.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/add_location.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/add_photo.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/add_photo.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/facebook.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/facebook.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/ic_launcher.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/icon.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/icon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/logo.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/logo.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        severity="Warning"
+        message="Found bitmap drawable res/drawable/title_bar_logo.png in densityless folder"
+        category="Usability:Icons"
+        priority="5"
+        summary="Ensures that images are not defined in the density-independent drawable folder"
+        explanation="The res/drawable folder is intended for density-independent graphics such as shapes defined in XML. For bitmaps, move it to `drawable-mdpi` and consider providing higher and lower resolution versions in `drawable-ldpi`, `drawable-hdpi` and `drawable-xhdpi`. If the icon *really* is density independent (for example a solid color) you can place it in `drawable-nodpi`."
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/title_bar_logo.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        severity="Warning"
+        message="The following unrelated icon files have identical contents: logo.png, title_bar_logo.png"
+        category="Usability:Icons"
+        priority="3"
+        summary="Finds duplicated icons under different names"
+        explanation="If an icon is repeated under different names, you can consolidate and just use one of the icons and delete the others to make your application smaller. However, duplicated icons usually are not intentional and can sometimes point to icons that were accidentally overwritten or accidentally not updated.">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/title_bar_logo.png"/>
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/drawable/logo.png"/>
+    </issue>
+
+    <issue
+        id="SelectableText"
+        severity="Warning"
+        message="Consider making the text value selectable by specifying android:textIsSelectable=&quot;true&quot;"
+        category="Usability"
+        priority="7"
+        summary="Looks for TextViews which should probably allow their text to be selected"
+        explanation="If a `&lt;TextView>` is used to display data, the user might want to copy that data and paste it elsewhere. To allow this, the `&lt;TextView>` should specify `android:textIsSelectable=&quot;true&quot;`.
+
+This lint check looks for TextViews which are likely to be displaying data: views whose text is set dynamically. This value will be ignored on platforms older than API 11, so it is okay to set it regardless of your `minSdkVersion`."
+        errorLine1="        &lt;TextView"
+        errorLine2="        ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_example_action.xml"
+            line="32"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        severity="Warning"
+        message="Buttons in button bars should be borderless; use style=&quot;?android:attr/buttonBarButtonStyle&quot; (and ?android:attr/buttonBarStyle on the parent)"
+        category="Usability"
+        priority="5"
+        summary="Ensures that buttons in button bars are borderless"
+        explanation="Button bars typically use a borderless style for the buttons. Set the `style=&quot;?android:attr/buttonBarButtonStyle&quot;` attribute on each of the buttons, and set `style=&quot;?android:attr/buttonBarStyle&quot;` on the parent layout"
+        url="http://developer.android.com/design/building-blocks/buttons.html"
+        urls="http://developer.android.com/design/building-blocks/buttons.html"
+        errorLine1="           &lt;Button"
+        errorLine2="           ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="34"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        severity="Warning"
+        message="Buttons in button bars should be borderless; use style=&quot;?android:attr/buttonBarButtonStyle&quot; (and ?android:attr/buttonBarStyle on the parent)"
+        category="Usability"
+        priority="5"
+        summary="Ensures that buttons in button bars are borderless"
+        explanation="Button bars typically use a borderless style for the buttons. Set the `style=&quot;?android:attr/buttonBarButtonStyle&quot;` attribute on each of the buttons, and set `style=&quot;?android:attr/buttonBarStyle&quot;` on the parent layout"
+        url="http://developer.android.com/design/building-blocks/buttons.html"
+        urls="http://developer.android.com/design/building-blocks/buttons.html"
+        errorLine1="           &lt;Button"
+        errorLine2="           ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="40"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        severity="Warning"
+        message="Buttons in button bars should be borderless; use style=&quot;?android:attr/buttonBarButtonStyle&quot; (and ?android:attr/buttonBarStyle on the parent)"
+        category="Usability"
+        priority="5"
+        summary="Ensures that buttons in button bars are borderless"
+        explanation="Button bars typically use a borderless style for the buttons. Set the `style=&quot;?android:attr/buttonBarButtonStyle&quot;` attribute on each of the buttons, and set `style=&quot;?android:attr/buttonBarStyle&quot;` on the parent layout"
+        url="http://developer.android.com/design/building-blocks/buttons.html"
+        urls="http://developer.android.com/design/building-blocks/buttons.html"
+        errorLine1="           &lt;Button"
+        errorLine2="           ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="46"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        severity="Warning"
+        message="[Accessibility] Missing contentDescription attribute on image"
+        category="Accessibility"
+        priority="3"
+        summary="Ensures that image widgets provide a contentDescription"
+        explanation="Non-textual widgets like ImageViews and ImageButtons should use the `contentDescription` attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.
+
+Note that elements in application screens that are purely decorative and do not provide any content or enable a user action should not have accessibility content descriptions. In this case, just suppress the lint warning with a tools:ignore=&quot;ContentDescription&quot; attribute.
+
+Note that for text fields, you should not set both the `hint` and the `contentDescription` attributes since the hint will never be shown. Just set the `hint`. See http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases."
+        errorLine1="    &lt;ImageView"
+        errorLine2="    ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/listitem.xml"
+            line="8"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        severity="Warning"
+        message="[Accessibility] Missing contentDescription attribute on image"
+        category="Accessibility"
+        priority="3"
+        summary="Ensures that image widgets provide a contentDescription"
+        explanation="Non-textual widgets like ImageViews and ImageButtons should use the `contentDescription` attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.
+
+Note that elements in application screens that are purely decorative and do not provide any content or enable a user action should not have accessibility content descriptions. In this case, just suppress the lint warning with a tools:ignore=&quot;ContentDescription&quot; attribute.
+
+Note that for text fields, you should not set both the `hint` and the `contentDescription` attributes since the hint will never be shown. Just set the `hint`. See http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases."
+        errorLine1="  &lt;ImageView"
+        errorLine2="  ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="29"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        severity="Warning"
+        message="[Accessibility] Missing contentDescription attribute on image"
+        category="Accessibility"
+        priority="3"
+        summary="Ensures that image widgets provide a contentDescription"
+        explanation="Non-textual widgets like ImageViews and ImageButtons should use the `contentDescription` attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.
+
+Note that elements in application screens that are purely decorative and do not provide any content or enable a user action should not have accessibility content descriptions. In this case, just suppress the lint warning with a tools:ignore=&quot;ContentDescription&quot; attribute.
+
+Note that for text fields, you should not set both the `hint` and the `contentDescription` attributes since the hint will never be shown. Just set the `hint`. See http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases."
+        errorLine1="         &lt;ImageView "
+        errorLine2="         ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="67"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        severity="Warning"
+        message="[Accessibility] Missing contentDescription attribute on image"
+        category="Accessibility"
+        priority="3"
+        summary="Ensures that image widgets provide a contentDescription"
+        explanation="Non-textual widgets like ImageViews and ImageButtons should use the `contentDescription` attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.
+
+Note that elements in application screens that are purely decorative and do not provide any content or enable a user action should not have accessibility content descriptions. In this case, just suppress the lint warning with a tools:ignore=&quot;ContentDescription&quot; attribute.
+
+Note that for text fields, you should not set both the `hint` and the `contentDescription` attributes since the hint will never be shown. Just set the `hint`. See http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases."
+        errorLine1="     &lt;ImageView"
+        errorLine2="     ^"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/splash.xml"
+            line="30"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        severity="Warning"
+        message="No label views point to this text field with an android:labelFor=&quot;@+id/@+id/txtlongitude&quot; attribute"
+        category="Accessibility"
+        priority="2"
+        summary="Ensures that text fields are marked with a `labelFor` attribute"
+        explanation="Text fields should be labelled with a `labelFor` attribute, provided your `minSdkVersion` is at least 17.
+
+If your view is labeled but by a label in a different layout which includes this one, just suppress this warning from lint."
+        errorLine1="           &lt;EditText"
+        errorLine2="           ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="67"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        severity="Warning"
+        message="No label views point to this text field with an android:labelFor=&quot;@+id/@+id/txtlatitude&quot; attribute"
+        category="Accessibility"
+        priority="2"
+        summary="Ensures that text fields are marked with a `labelFor` attribute"
+        explanation="Text fields should be labelled with a `labelFor` attribute, provided your `minSdkVersion` is at least 17.
+
+If your view is labeled but by a label in a different layout which includes this one, just suppress this warning from lint."
+        errorLine1="           &lt;EditText"
+        errorLine2="           ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="92"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        severity="Warning"
+        message="No label views point to this text field with an android:labelFor=&quot;@+id/@+id/mtxtresult&quot; attribute"
+        category="Accessibility"
+        priority="2"
+        summary="Ensures that text fields are marked with a `labelFor` attribute"
+        explanation="Text fields should be labelled with a `labelFor` attribute, provided your `minSdkVersion` is at least 17.
+
+If your view is labeled but by a label in a different layout which includes this one, just suppress this warning from lint."
+        errorLine1="       &lt;EditText"
+        errorLine2="       ^">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="105"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;Reset&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="               android:text=&quot;Reset&quot; />"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="38"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;Check Facebook&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="               android:text=&quot;Check Facebook&quot; />"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="44"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;Do Facebook&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="               android:text=&quot;Do Facebook&quot; />"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="50"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;longitude&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="               android:text=&quot;longitude&quot;"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="63"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;latitude&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="               android:text=&quot;latitude&quot;"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fakeme.xml"
+            line="88"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;This information about the invitation&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="        android:text=&quot;This information about the invitation&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_invite_all.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;Invite all&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="        android:text=&quot;Invite all&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_invite_all.xml"
+            line="20"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;The result is here&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="        android:text=&quot;The result is here&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_invite_all.xml"
+            line="30"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;test&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="                android:text=&quot;test&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/listitem.xml"
+            line="21"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;test2&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="                android:text=&quot;test2&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/listitem.xml"
+            line="28"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="[I18N] Hardcoded string &quot;showme&quot;, should use @string resource"
+        category="Internationalization"
+        priority="5"
+        summary="Looks for hardcoded text attributes which should be converted to resource lookup"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:
+
+* When creating configuration variations (for example for landscape or portrait)you have to repeat the actual text (and keep it up to date when making changes)
+
+* The application cannot be translated to other languages by just adding new translations for existing string resources.
+
+In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1="            android:text=&quot;showme&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="adt">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/splash.xml"
+            line="62"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Use &quot;Gravity.START&quot; instead of &quot;Gravity.LEFT&quot; to ensure correct behavior in right-to-left locales"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="   textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);"
+        errorLine2="                               ~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/java/com/platzerworld/fakefb/utils/ExamplesAdapter.java"
+            line="84"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_alignParentLeft with android:layout_alignParentStart=&quot;true&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_alignParentLeft=&quot;true&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_list_friends.xml"
+            line="12"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd=&quot;true&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_alignParentRight=&quot;true&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_list_friends.xml"
+            line="23"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_alignParentLeft with android:layout_alignParentStart=&quot;true&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="            android:layout_alignParentLeft=&quot;true&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_main.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd=&quot;true&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="            android:layout_alignParentRight=&quot;true&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/fragment_main.xml"
+            line="28"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_marginLeft with android:layout_marginStart=&quot;15dp&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="            android:layout_marginLeft=&quot;15dp&quot; >"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/listitem.xml"
+            line="18"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd=&quot;true&quot; to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="            android:layout_alignParentRight=&quot;true&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="42"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Use &quot;end&quot; instead of &quot;right&quot; to ensure correct behavior in right-to-left locales"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Looks for hardcoded left/right constants which could be start/end for bidirectional text"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="            android:gravity=&quot;right|center_vertical&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/platzerworld/Development/Projects/Android/FakeMe/app/src/main/res/layout/selection.xml"
+            line="44"
+            column="13"/>
+    </issue>
+
+</issues>
