@@ -17,7 +17,7 @@ Grab the latest build for your platform from the [releases page](https://github.
 
 If your platform isn't there, you can build it yourself with [stack](https://github.com/commercialhaskell/stack):
 
-```bash
+```
 $ git clone https://github.com/passy/android-lint-summary
 $ cd android-lint-summary
 $ stack setup
@@ -38,7 +38,7 @@ Watch this ASCIICast to see it in action:
 
 ## `--help`
 
-```bash
+```
 $ android-lint-summary --help
 
 android-lint-summary - a lint-results.xml pretty printer
@@ -59,7 +59,7 @@ Available options:
 
 ## Developing
 
-```bash
+```
 $ stack setup
 $ stack build
 $ stack test
