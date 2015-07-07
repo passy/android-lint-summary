@@ -18,8 +18,8 @@ import Data.Stringable (Stringable(fromString, toString))
 import qualified System.FilePath.Find as Find
 import qualified System.Console.Terminal.Size as Terminal
 
-appArgs :: Parser AppArgs
-appArgs = AppArgs
+appOpts :: Parser AppOpts
+appOpts = AppOpts
     <$> strOption ( long "glob"
                  <> short 'g'
                  <> help "Glob pattern to select result files"
@@ -38,7 +38,7 @@ appArgs = AppArgs
 main :: IO ()
 main = execParser opts >>= run
   where
-    opts = info (helper <*> appArgs <**> versionInfo)
+    opts = info (helper <*> appOpts <**> versionInfo)
         ( fullDesc
        <> progDesc "Format Android Lint XML output nicely"
        <> header "android-lint-summary - a lint-results.xml pretty printer" )
@@ -49,7 +49,7 @@ main = execParser opts >>= run
        <> hidden
        <> help "Show version information" )
 
-    run :: AppArgs -> IO ()
+    run :: AppOpts -> IO ()
     run args' = do
         dir <- getCurrentDirectory
         size <- Terminal.size

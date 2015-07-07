@@ -3,7 +3,7 @@
 module AndroidLintSummary (
   supportedLintFormatVersion
 , AppEnv(..)
-, AppArgs(..)
+, AppOpts(..)
 , LintSeverity(..)
 , LintFormatter(..)
 , LintLocation(..)
@@ -65,17 +65,17 @@ data LintFormatter =
 data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
-data AppArgs = AppArgs { pattern :: GlobPattern
+data AppOpts = AppOpts { pattern :: GlobPattern
                        , formatter :: LintFormatter
                        , verbose :: Verbosity
                        }
     deriving (Show)
 
-data AppEnv = AppEnv { args :: AppArgs
+data AppEnv = AppEnv { opts :: AppOpts
                      , terminalSize :: Maybe (Terminal.Window Int)
                      }
-instance Default AppArgs where
-    def = AppArgs { pattern = defaultLintResultsGlob
+instance Default AppOpts where
+    def = AppOpts { pattern = defaultLintResultsGlob
                   , formatter = SimpleLintFormatter
                   , verbose = Normal
                   }
@@ -132,7 +132,7 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
                    ]
 
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
-        fmtExplanation i = ask >>= \env -> return $ case verbose $ args env of
+        fmtExplanation i = ask >>= \env -> return $ case verbose $ opts env of
           Normal -> mempty
           Verbose -> chunk
             ( maybe
