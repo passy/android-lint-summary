@@ -65,7 +65,8 @@ data LintFormatter =
 data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
-data AppOpts = AppOpts { pattern :: GlobPattern
+data AppOpts = AppOpts { targets :: Maybe [FilePath]
+                       , pattern :: GlobPattern
                        , formatter :: LintFormatter
                        , verbose :: Verbosity
                        }
@@ -75,7 +76,8 @@ data AppEnv = AppEnv { opts :: AppOpts
                      , terminalSize :: Maybe (Terminal.Window Int)
                      }
 instance Default AppOpts where
-    def = AppOpts { pattern = defaultLintResultsGlob
+    def = AppOpts { targets = mempty
+                  , pattern = defaultLintResultsGlob
                   , formatter = SimpleLintFormatter
                   , verbose = Normal
                   }

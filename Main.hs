@@ -20,7 +20,8 @@ import qualified System.Console.Terminal.Size as Terminal
 
 appOpts :: Parser AppOpts
 appOpts = AppOpts
-    <$> strOption ( long "glob"
+    <$> ( optional $ some $ argument str (metavar "FILES") )
+    <*> strOption ( long "glob"
                  <> short 'g'
                  <> help "Glob pattern to select result files"
                  <> value (pattern def)
@@ -35,10 +36,18 @@ appOpts = AppOpts
                            <> short 'v'
                            <> help "Enable verbose mode" )
 
-main :: IO ()
-main = execParser opts >>= run
+findFilesFromArgs :: AppOpts -> IO [FilePath]
+findFilesFromArgs args' = go $ targets args'
   where
-    opts = info (helper <*> appOpts <**> versionInfo)
+    go (Just names) = return names
+    go Nothing = do
+      dir <- getCurrentDirectory
+      Find.find Find.always (Find.filePath Find.~~? pattern args') dir
+
+main :: IO ()
+main = execParser opts' >>= run
+  where
+    opts' = info (helper <*> appOpts <**> versionInfo)
         ( fullDesc
        <> progDesc "Format Android Lint XML output nicely"
        <> header "android-lint-summary - a lint-results.xml pretty printer" )
@@ -51,9 +60,8 @@ main = execParser opts >>= run
 
     run :: AppOpts -> IO ()
     run args' = do
-        dir <- getCurrentDirectory
         size <- Terminal.size
         let env = AppEnv args' size
-        files <- Find.find Find.always (Find.filePath Find.~~? pattern args') dir
+        files <- findFilesFromArgs args'
         lintIssues <- concat <$> forM files (openXMLFile >=> readLintIssues)
         mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env
