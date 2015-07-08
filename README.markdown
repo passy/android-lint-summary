@@ -21,7 +21,7 @@ If your platform isn't there, you can build it yourself with [stack](https://git
 $ git clone https://github.com/passy/android-lint-summary
 $ cd android-lint-summary
 $ stack setup
-$ stack stack install
+$ stack install
 ```
 
 ## Using
