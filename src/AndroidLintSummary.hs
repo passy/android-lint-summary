@@ -24,8 +24,10 @@ import Control.Monad.Reader (ask, Reader())
 import Data.Default (Default(), def)
 import Data.Stringable (Stringable(..))
 import System.FilePath.GlobPattern (GlobPattern)
+import System.IO (openFile, Handle(), IOMode(ReadMode), stdin)
 
 import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 import qualified System.Console.Terminal.Size as Terminal
 
 supportedLintFormatVersion :: String
@@ -171,8 +173,16 @@ indentWrap size indentation text = foldMap wrap lines'
                     in indent <> as <> "\n" <> wrap bs
 
 openXMLFile :: forall s b. FilePath -> IO (IOStateArrow s b XmlTree)
-openXMLFile filepath = do
-    contents <- readFile filepath
+openXMLFile filepath = readXMLFileHandle =<< getHandle filepath
+  where
+    getHandle s
+      | s == "-"  = return stdin
+      | otherwise = openFile filepath ReadMode
+
+
+readXMLFileHandle :: forall s b. Handle -> IO (IOStateArrow s b XmlTree)
+readXMLFileHandle h = do
+    contents <- TIO.hGetContents h
     return $ readString [withWarnings yes] $ T.unpack contents
 
 readLintIssues :: IOSLA (XIOState ()) XmlTree XmlTree -> IO [LintIssue]
