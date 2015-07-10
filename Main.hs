@@ -1,26 +1,27 @@
-{-# LANGUAGE OverloadedStrings, NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
-import BasicPrelude hiding (fromString)
+import           BasicPrelude                 hiding (fromString)
 
-import Rainbow
-import Options.Applicative
-import AndroidLintSummary
+import           AndroidLintSummary
+import           Options.Applicative
+import           Rainbow
 
-import Control.Monad.Reader (runReader)
-import Data.Default (def)
-import Data.Version (showVersion)
-import Paths_android_lint_summary (version)
-import System.Directory (getCurrentDirectory)
-import Data.Stringable (Stringable(fromString, toString))
+import           Control.Monad.Reader         (runReader)
+import           Data.Default                 (def)
+import           Data.Stringable              (Stringable (fromString, toString))
+import           Data.Version                 (showVersion)
+import           Paths_android_lint_summary   (version)
+import           System.Directory             (getCurrentDirectory)
 
-import qualified System.FilePath.Find as Find
 import qualified System.Console.Terminal.Size as Terminal
+import qualified System.FilePath.Find         as Find
 
 appOpts :: Parser AppOpts
 appOpts = AppOpts
-    <$> ( optional $ some $ argument str (metavar "FILES") )
+    <$> optional ( some $ argument str (metavar "FILES") )
     <*> strOption ( long "glob"
                  <> short 'g'
                  <> help "Glob pattern to select result files"

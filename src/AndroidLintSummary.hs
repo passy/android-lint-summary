@@ -1,4 +1,7 @@
-{-# LANGUAGE OverloadedStrings, Arrows, NoImplicitPrelude, ExistentialQuantification #-}
+{-# LANGUAGE Arrows                    #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE NoImplicitPrelude         #-}
+{-# LANGUAGE OverloadedStrings         #-}
 -- | Parsers and pretty printers for the `lint-results.xml` file format.
 module AndroidLintSummary (
   supportedLintFormatVersion
@@ -15,19 +18,20 @@ module AndroidLintSummary (
 , formatLintIssues
 ) where
 
-import BasicPrelude hiding (fromString)
+import           BasicPrelude                 hiding (fromString)
 
-import Rainbow
-import Text.XML.HXT.Core
+import           Rainbow
+import           Text.XML.HXT.Core
 
-import Control.Monad.Reader (ask, Reader())
-import Data.Default (Default(), def)
-import Data.Stringable (Stringable(..))
-import System.FilePath.GlobPattern (GlobPattern)
-import System.IO (openFile, Handle(), IOMode(ReadMode), stdin)
+import           Control.Monad.Reader         (Reader (), ask)
+import           Data.Default                 (Default (), def)
+import           Data.Stringable              (Stringable (..))
+import           System.FilePath.GlobPattern  (GlobPattern)
+import           System.IO                    (Handle (), IOMode (ReadMode),
+                                               openFile, stdin)
 
-import qualified Data.Text as T
-import qualified Data.Text.IO as TIO
+import qualified Data.Text                    as T
+import qualified Data.Text.IO                 as TIO
 import qualified System.Console.Terminal.Size as Terminal
 
 supportedLintFormatVersion :: String
@@ -43,16 +47,16 @@ data LintSeverity = FatalSeverity
     deriving (Eq, Ord, Show, Bounded, Enum)
 
 data LintLocation = LintLocation { filename :: FilePath
-                                 , line :: Maybe Int
-                                 , column :: Maybe Int
+                                 , line     :: Maybe Int
+                                 , column   :: Maybe Int
                                  }
     deriving (Eq, Show)
 
-data LintIssue = LintIssue { severity :: LintSeverity
-                           , summary :: T.Text
-                           , priority :: Int
+data LintIssue = LintIssue { severity    :: LintSeverity
+                           , summary     :: T.Text
+                           , priority    :: Int
                            , explanation :: T.Text
-                           , location :: LintLocation
+                           , location    :: LintLocation
                            }
     deriving (Eq, Show)
 
@@ -67,14 +71,14 @@ data LintFormatter =
 data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
-data AppOpts = AppOpts { targets :: Maybe [FilePath]
-                       , pattern :: GlobPattern
+data AppOpts = AppOpts { targets   :: Maybe [FilePath]
+                       , pattern   :: GlobPattern
                        , formatter :: LintFormatter
-                       , verbose :: Verbosity
+                       , verbose   :: Verbosity
                        }
     deriving (Show)
 
-data AppEnv = AppEnv { opts :: AppOpts
+data AppEnv = AppEnv { opts         :: AppOpts
                      , terminalSize :: Maybe (Terminal.Window Int)
                      }
 instance Default AppOpts where
