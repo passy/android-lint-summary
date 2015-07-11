@@ -144,7 +144,7 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
           Normal -> mempty
           Verbose -> chunk
             ( maybe
-              (explanation i)
+              (explanation i <> "\n")
               (\size -> indentWrap size 4 $ explanation i)
               (terminalSize env)
             ) & faint
