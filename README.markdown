@@ -1,6 +1,14 @@
-# android-lint-summary [![Build Status](https://travis-ci.org/passy/android-lint-summary.svg)](https://travis-ci.org/passy/android-lint-summary)
+<h1 align="center">
+  <br>
+  <img width="400" src="https://rawgit.com/passy/android-lint-summary/master/resources/logo.svg" alt="android-lint-summary">
+  <br>
+  <br>
+  <br>
+</h1>
 
 > View your Android lint issues with style.
+
+[![Build Status](https://travis-ci.org/passy/android-lint-summary.svg)](https://travis-ci.org/passy/android-lint-summary)
 
 ![Screenshot](https://raw.githubusercontent.com/passy/android-lint-summary/master/resources/screenshot.png)
 
