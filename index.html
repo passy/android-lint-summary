@@ -1,111 +1,17 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Android Lint Summary by passy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Android Lint Summary</h1>
-      <h2 class="project-tagline">Prettier display of Android Lint issues</h2>
-      <a href="https://github.com/passy/android-lint-summary" class="btn">View on GitHub</a>
+---
+layout: default
+---
+
+<article class="post">
+    <header>
+        <h1><img src="/assets/images/logo.svg" alt="Android Lint Summary"></h1>
+    </header>
+    <section id="post-body">
+        {% assign post = site.posts.first %}
+        {% assign content = post.content %}
+        {{content}}
     </section>
+</article>
 
-    <section class="main-content">
-      <h1>
-<a id="android-lint-summary-" class="anchor" href="#android-lint-summary-" aria-hidden="true"><span class="octicon octicon-link"></span></a>android-lint-summary <a href="https://travis-ci.org/passy/android-lint-summary"><img src="https://travis-ci.org/passy/android-lint-summary.svg" alt="Build Status"></a>
-</h1>
 
-<blockquote>
-<p>View your Android lint issues in style.</p>
-</blockquote>
-
-<p><img src="https://raw.githubusercontent.com/passy/android-lint-summary/master/resources/screenshot.png" alt="Screenshot"></p>
-
-<p><script type="text/javascript" src="https://asciinema.org/a/22800.js" id="asciicast-22800" async></script></p>
-
-<h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
-
-<ul>
-<li>Combines multiple projects into one output. You no longer need to check each
-and every of your subproject's lint results for errors.</li>
-<li>View all your issues nicely formatted in your terminal.</li>
-<li>Default arguments that do what you probably want them to.</li>
-</ul>
-
-<h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<p>Grab the latest build for your platform from the <a href="https://github.com/passy/android-lint-summary/releases">releases page</a>.</p>
-
-<p>If your platform isn't there, you can build it yourself with <a href="https://github.com/commercialhaskell/stack">stack</a>:</p>
-
-<div class="highlight highlight-bash"><pre>$ git clone https://github.com/passy/android-lint-summary
-$ <span class="pl-c1">cd</span> android-lint-summary
-$ stack setup
-$ stack stack install</pre></div>
-
-<h2>
-<a id="using" class="anchor" href="#using" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using</h2>
-
-<pre><code>$ cd my-android-project
-$ ./gradle lint
-$ android-lint-summary
-</code></pre>
-
-<h2>
-<a id="--help" class="anchor" href="#--help" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>--help</code>
-</h2>
-
-<div class="highlight highlight-bash"><pre>$ android-lint-summary --help
-
-android-lint-summary - a lint-results.xml pretty printer
-
-Usage: android-lint-summary [-g<span class="pl-k">|</span>--glob ARG] [-f<span class="pl-k">|</span>--formatter ARG] [-v<span class="pl-k">|</span>--verbose]
-  Format Android Lint XML output nicely
-
-Available options:
-  -h,--help                Show this <span class="pl-c1">help</span> text
-  -g,--glob ARG            Glob pattern to <span class="pl-k">select</span> <span class="pl-smi">result</span>
-                           files (default: <span class="pl-s"><span class="pl-pds">"</span>**/build/outputs/lint-results.xml<span class="pl-pds">"</span></span>)
-  -f,--formatter ARG       Specify a formatter to use
-                           [simple<span class="pl-k">|</span>null] (default: <span class="pl-s"><span class="pl-pds">"</span>simple<span class="pl-pds">"</span></span>)
-  -v,--verbose             Enable verbose mode
-  -V,--version             Show version information</pre></div>
-
-<h2>
-<a id="developing" class="anchor" href="#developing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developing</h2>
-
-<div class="highlight highlight-bash"><pre>$ stack setup
-$ stack build
-$ stack <span class="pl-c1">test</span>
-$ stack <span class="pl-c1">exec</span> android-lint-summary</pre></div>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/passy/android-lint-summary">Android Lint Summary</a> is maintained by <a href="https://github.com/passy">passy</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-            <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-587894-22");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-  </body>
-</html>
-
+{% include footer.html %}

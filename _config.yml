@@ -1,0 +1,17 @@
+name: Android Lint Summary
+description: A prettier summary of your Android Lint issues
+
+exclude: [vendor]
+
+markdown: redcarpet
+highlighter: pygments
+
+baseurl: /
+domain_name: 'https://passy.github.io/android-lint-summary'
+google_analytics: 'UA-587894-23'
+github_url: 'https://github.com/passy/android-lint-summary'
+
+# Details for the RSS feed generator
+url:            'http://your-blog-url.example.com'
+author:         'Pascal Hartig'
+authorTwitter:  '@passy'
