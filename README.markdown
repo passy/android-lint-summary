@@ -10,8 +10,6 @@
 
 [![Build Status](https://travis-ci.org/passy/android-lint-summary.svg)](https://travis-ci.org/passy/android-lint-summary)
 
-![Screenshot](https://raw.githubusercontent.com/passy/android-lint-summary/master/resources/screenshot.png)
-
 ## Features
 
 - Combines multiple projects into one output. You no longer need to check each
