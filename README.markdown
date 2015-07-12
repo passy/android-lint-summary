@@ -19,6 +19,8 @@
 - View all your issues nicely formatted in your terminal.
 - Default arguments that do what you probably want them to.
 
+![Screenshot](https://raw.githubusercontent.com/passy/android-lint-summary/master/resources/screenshot.png)
+
 ## Installation
 
 Grab the latest build for your platform from the [releases page](https://github.com/passy/android-lint-summary/releases).
@@ -37,12 +39,19 @@ $ stack install
 ```
 $ cd my-android-project
 $ ./gradle lint
+# Search in your current working directory
 $ android-lint-summary
+# Or search for a different pattern
+$ android-lint-summary -g '**/lint-summary*.xml'
+# Or point directly to a file
+$ android-lint-summary app/build/outputs/lint-summary.xml
+# Or read from stdin
+$ android-lint-summary - < app/build/outputs/lint-summary.xml
 ```
 
 Watch this ASCIICast to see it in action:
 
-[![asciicast](https://asciinema.org/a/22800.png)](https://asciinema.org/a/22800)
+[![asciicast](https://asciinema.org/a/23302.png)](https://asciinema.org/a/23302)
 
 ## `--help`
 
@@ -73,3 +82,8 @@ $ stack build
 $ stack test
 $ stack exec android-lint-summary
 ```
+
+## Credits
+
+Massive thanks to [Sindre Sorhus](https://twitter.com/sindresorhus) for making
+this gorgeous logo.
