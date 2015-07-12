@@ -6,7 +6,7 @@ exclude: [vendor]
 markdown: redcarpet
 highlighter: pygments
 
-baseurl: /
+baseurl: /android-lint-summary/
 domain_name: 'https://passy.github.io/android-lint-summary'
 google_analytics: 'UA-587894-23'
 github_url: 'https://github.com/passy/android-lint-summary'
