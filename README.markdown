@@ -51,6 +51,14 @@ Watch this ASCIICast to see it in action:
 
 [![asciicast](https://asciinema.org/a/23302.png)](https://asciinema.org/a/23302)
 
+## Gradle Integration
+
+Check out the [LintSummary Sample](https://github.com/passy/Android-LintSummarySample/)
+to see how to integrate this with your gradle build.
+
+If you copy this [gradle script](https://github.com/passy/Android-LintSummarySample/blob/c3b30a053053aafccec387aa2c6ef3e1276f0e52/gradle/lint-summary.gradle)
+to your project, you can enable it with just one line per sub-project.
+
 ## `--help`
 
 ```
