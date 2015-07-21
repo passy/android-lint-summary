@@ -94,7 +94,7 @@ instance Stringable LintSeverity where
         | s == "Fatal" = FatalSeverity
         | s == "Error" = ErrorSeverity
         | s == "Warning" = WarningSeverity
-        | s == "Informational" = InformationalSeverity
+        | s == "Information" = InformationalSeverity
         | otherwise = error $ "Invalid severity " <> s
     length _ = 0
 
