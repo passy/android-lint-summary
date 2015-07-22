@@ -112,7 +112,7 @@ formatSeverity :: LintSeverity -> String
 formatSeverity FatalSeverity         = "Fatal"
 formatSeverity ErrorSeverity         = "Error"
 formatSeverity WarningSeverity       = "Warning"
-formatSeverity InformationalSeverity = "Informational"
+formatSeverity InformationalSeverity = "Information"
 
 colorSeverity :: LintSeverity -> Chunk a -> Chunk a
 colorSeverity FatalSeverity         a = a & fore red & bold
