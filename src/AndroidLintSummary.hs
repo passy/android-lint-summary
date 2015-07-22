@@ -94,7 +94,7 @@ instance Stringable LintSeverity where
         | s == "Fatal" = FatalSeverity
         | s == "Error" = ErrorSeverity
         | s == "Warning" = WarningSeverity
-        | s == "Informational" = InformationalSeverity
+        | s == "Information" = InformationalSeverity
         | otherwise = error $ "Invalid severity " <> s
     length _ = 0
 
@@ -112,7 +112,7 @@ formatSeverity :: LintSeverity -> String
 formatSeverity FatalSeverity         = "Fatal"
 formatSeverity ErrorSeverity         = "Error"
 formatSeverity WarningSeverity       = "Warning"
-formatSeverity InformationalSeverity = "Informational"
+formatSeverity InformationalSeverity = "Information"
 
 colorSeverity :: LintSeverity -> Chunk a -> Chunk a
 colorSeverity FatalSeverity         a = a & fore red & bold

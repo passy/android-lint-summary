@@ -62,3 +62,12 @@ main = hspec $ do
             filename loc0 `shouldBe` "/home/pascal/Projects/java/Android-DirectoryChooser/library/build.gradle"
             line loc0 `shouldBe` Just 25
             column loc0 `shouldBe` Just 5
+
+        it "reads a file with Information severity" $ do
+            file <- liftIO . openFixture $ "3" </> "lint-results.xml"
+            issues <- liftIO $ readLintIssues file
+
+            length issues `shouldBe` 88
+
+            let infos = filter (\i -> severity i == InformationalSeverity) issues
+            length infos `shouldBe` 3
