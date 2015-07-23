@@ -76,7 +76,7 @@ data AppOpts = AppOpts { targets   :: Maybe [FilePath]
                        , formatter :: LintFormatter
                        , verbose   :: Verbosity
                        }
-    deriving (Show)
+    deriving (Show, Eq)
 
 data AppEnv = AppEnv { opts         :: AppOpts
                      , terminalSize :: Maybe (Terminal.Window Int)

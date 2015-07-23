@@ -4,14 +4,19 @@ module Main where
 import BasicPrelude hiding (fromString)
 
 import Test.Hspec
-import Test.QuickCheck
-import Test.QuickCheck.Property
+import Test.QuickCheck hiding (verbose)
+import Test.QuickCheck.Property hiding (verbose)
 import Test.QuickCheck.Monadic
 
 import AndroidLintSummary
+import AndroidLintSummary.CLI
 import Data.Stringable (Stringable(toString, fromString))
 import System.Directory (getCurrentDirectory)
 import Text.XML.HXT.Core
+import Data.Version (makeVersion)
+
+import Options.Applicative.Builder (prefs)
+import Options.Applicative.Extra (execParserPure, getParseResult, execParserMaybe)
 
 
 instance Arbitrary LintSeverity where
@@ -71,3 +76,20 @@ main = hspec $ do
 
             let infos = filter (\i -> severity i == InformationalSeverity) issues
             length infos `shouldBe` 3
+
+    describe "CLI Argument parser" $ do
+        -- TODO: Refactor those, remove code duplication
+
+        it "verbose mode" $ do
+            let version = makeVersion [0, 3, 1]
+            let parser = lintSummaryParser version
+            let res = execParserMaybe parser ["-v"]
+            let (Just opts) = res
+            verbose opts `shouldBe` Verbose
+
+        it "normal mode" $ do
+            let version = makeVersion [0, 3, 1]
+            let parser = lintSummaryParser version
+            let res = execParserMaybe parser [""]
+            let (Just opts) = res
+            verbose opts `shouldBe` Normal

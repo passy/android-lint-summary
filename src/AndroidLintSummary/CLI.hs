@@ -11,9 +11,8 @@ import           Rainbow
 
 import           Control.Monad.Reader         (runReader)
 import           Data.Default                 (def)
+import           Data.Version                 (Version(), showVersion)
 import           Data.Stringable              (Stringable (fromString, toString))
-import           Data.Version                 (showVersion)
-import           Paths_android_lint_summary   (version)
 import           System.Directory             (getCurrentDirectory)
 
 import qualified System.Console.Terminal.Size as Terminal
@@ -27,8 +26,8 @@ findFilesFromArgs args' = go $ targets args'
       dir <- getCurrentDirectory
       Find.find Find.always (Find.filePath Find.~~? pattern args') dir
 
-lintSummaryParser :: ParserInfo AppOpts
-lintSummaryParser =
+lintSummaryParser :: Version -> ParserInfo AppOpts
+lintSummaryParser version =
     info (helper <*> appOpts <**> versionInfo)
         ( fullDesc
        <> progDesc "Format Android Lint XML output nicely"
@@ -57,8 +56,8 @@ lintSummaryParser =
        <> hidden
        <> help "Show version information" )
 
-runCLI :: IO ()
-runCLI = execParser lintSummaryParser >>= run
+runCLI :: Version -> IO ()
+runCLI version = execParser (lintSummaryParser version) >>= run
   where
     run :: AppOpts -> IO ()
     run args' = do
