@@ -20,7 +20,7 @@ flag documentation
   default:             False
 
 library
-  exposed-modules:     AndroidLintSummary
+  exposed-modules:     AndroidLintSummary, AndroidLintSummary.CLI
   hs-source-dirs:      src
   other-extensions:    OverloadedStrings
                      , Arrows
@@ -85,3 +85,4 @@ Test-Suite hspec-tests
                      , hspec
                      , hxt
                      , stringable
+                     , optparse-applicative
