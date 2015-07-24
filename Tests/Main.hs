@@ -78,18 +78,15 @@ main = hspec $ do
             length infos `shouldBe` 3
 
     describe "CLI Argument parser" $ do
-        -- TODO: Refactor those, remove code duplication
+        let version = makeVersion [0, 3, 1]
+        let parser = lintSummaryParser version
 
         it "verbose mode" $ do
-            let version = makeVersion [0, 3, 1]
-            let parser = lintSummaryParser version
             let res = execParserMaybe parser ["-v"]
             let (Just opts) = res
             verbose opts `shouldBe` Verbose
 
         it "normal mode" $ do
-            let version = makeVersion [0, 3, 1]
-            let parser = lintSummaryParser version
             let res = execParserMaybe parser [""]
             let (Just opts) = res
             verbose opts `shouldBe` Normal
