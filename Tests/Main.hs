@@ -16,6 +16,7 @@ import Text.XML.HXT.Core
 import Data.Version (makeVersion)
 
 import Options.Applicative.Builder (prefs)
+import Control.Exception (evaluate)
 import Options.Applicative.Extra (execParserPure, getParseResult, execParserMaybe)
 
 
@@ -95,3 +96,24 @@ main = hspec $ do
             let res = parse [""]
             let (Just opts) = res
             verbose opts `shouldBe` Normal
+            formatter opts `shouldBe` SimpleLintFormatter
+
+        it "glob" $ do
+            let res = parse ["-g", "**/my/glob.*"]
+            let (Just opts) = res
+            pattern opts `shouldBe` "**/my/glob.*"
+
+        it "null formatter" $ do
+            let res = parse ["-f", "null"]
+            let (Just opts) = res
+            formatter opts `shouldBe` NullLintFormatter
+
+        it "simple formatter" $ do
+            let res = parse ["-f", "simple"]
+            let (Just opts) = res
+            formatter opts `shouldBe` SimpleLintFormatter
+
+        it "invalid formatter" $ do
+            let res = parse ["-f", "invalid"]
+            let (Just opts) = res
+            evaluate (formatter opts) `shouldThrow` errorCall "Invalid LintFormatter specification"
