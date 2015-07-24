@@ -80,16 +80,18 @@ main = hspec $ do
     describe "CLI Argument parser" $ do
         let version = makeVersion [0, 3, 1]
         let parser = lintSummaryParser version
+        let defaultPrefs = prefs mempty
+        let parse args = getParseResult $ execParserPure defaultPrefs parser args
 
         it "doesn't run the app when querying the version" $ do
-            execParserMaybe parser ["-V"] `shouldBe` Nothing
+            parse ["-V"] `shouldBe` Nothing
 
         it "verbose mode" $ do
-            let res = execParserMaybe parser ["-v"]
+            let res = parse ["-v"]
             let (Just opts) = res
             verbose opts `shouldBe` Verbose
 
         it "normal mode" $ do
-            let res = execParserMaybe parser [""]
+            let res = parse [""]
             let (Just opts) = res
             verbose opts `shouldBe` Normal
