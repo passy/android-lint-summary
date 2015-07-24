@@ -81,6 +81,9 @@ main = hspec $ do
         let version = makeVersion [0, 3, 1]
         let parser = lintSummaryParser version
 
+        it "doesn't run the app when querying the version" $ do
+            execParserMaybe parser ["-V"] `shouldBe` Nothing
+
         it "verbose mode" $ do
             let res = execParserMaybe parser ["-v"]
             let (Just opts) = res
