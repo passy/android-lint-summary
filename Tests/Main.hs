@@ -1,23 +1,26 @@
-{-# LANGUAGE OverloadedStrings, NoImplicitPrelude, ExistentialQuantification #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE NoImplicitPrelude         #-}
+{-# LANGUAGE OverloadedStrings         #-}
 module Main where
 
-import BasicPrelude hiding (fromString)
+import           BasicPrelude                hiding (fromString)
 
-import Test.Hspec
-import Test.QuickCheck hiding (verbose)
-import Test.QuickCheck.Property hiding (verbose)
-import Test.QuickCheck.Monadic
+import           Test.Hspec
+import           Test.QuickCheck             hiding (verbose)
+import           Test.QuickCheck.Monadic
+import           Test.QuickCheck.Property    hiding (verbose)
 
-import AndroidLintSummary
-import AndroidLintSummary.CLI
-import Data.Stringable (Stringable(toString, fromString))
-import System.Directory (getCurrentDirectory)
-import Text.XML.HXT.Core
-import Data.Version (makeVersion)
+import           AndroidLintSummary
+import           AndroidLintSummary.CLI
+import           Data.Stringable             (Stringable (toString, fromString))
+import           Data.Version                (makeVersion)
+import           System.Directory            (getCurrentDirectory)
+import           Text.XML.HXT.Core
 
-import Options.Applicative.Builder (prefs)
-import Control.Exception (evaluate)
-import Options.Applicative.Extra (execParserPure, getParseResult, execParserMaybe)
+import           Control.Exception           (evaluate)
+import           Options.Applicative.Builder (prefs)
+import           Options.Applicative.Extra   (execParserMaybe, execParserPure,
+                                              getParseResult)
 
 
 instance Arbitrary LintSeverity where
