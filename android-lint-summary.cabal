@@ -86,3 +86,4 @@ Test-Suite hspec-tests
                      , hxt
                      , stringable
                      , optparse-applicative
+                     , lens

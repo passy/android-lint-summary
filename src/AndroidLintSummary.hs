@@ -2,6 +2,7 @@
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE NoImplicitPrelude         #-}
 {-# LANGUAGE OverloadedStrings         #-}
+{-# LANGUAGE TemplateHaskell           #-}
 -- | Parsers and pretty printers for the `lint-results.xml` file format.
 module AndroidLintSummary (
   supportedLintFormatVersion
@@ -9,13 +10,25 @@ module AndroidLintSummary (
 , AppOpts(..)
 , LintSeverity(..)
 , LintFormatter(..)
-, LintLocation(..)
-, LintIssue(..)
+, LintLocation()
+, LintIssue()
 , Verbosity(..)
 , readLintIssues
 , openXMLFile
 , indentWrap
 , formatLintIssues
+, filename
+, line
+, column
+, severity
+, summary
+, priority
+, explanation
+, location
+, formatter
+, pattern
+, targets
+, verbose
 ) where
 
 import           BasicPrelude                 hiding (fromString)
@@ -23,6 +36,7 @@ import           BasicPrelude                 hiding (fromString)
 import           Rainbow
 import           Text.XML.HXT.Core
 
+import           Control.Lens                 hiding (deep)
 import           Control.Monad.Reader         (Reader (), ask)
 import           Data.Default                 (Default (), def)
 import           Data.Stringable              (Stringable (..))
@@ -46,19 +60,23 @@ data LintSeverity = FatalSeverity
                   | InformationalSeverity
     deriving (Eq, Ord, Show, Bounded, Enum)
 
-data LintLocation = LintLocation { filename :: FilePath
-                                 , line     :: Maybe Int
-                                 , column   :: Maybe Int
+data LintLocation = LintLocation { _filename :: FilePath
+                                 , _line     :: Maybe Int
+                                 , _column   :: Maybe Int
                                  }
     deriving (Eq, Show)
 
-data LintIssue = LintIssue { severity    :: LintSeverity
-                           , summary     :: T.Text
-                           , priority    :: Int
-                           , explanation :: T.Text
-                           , location    :: LintLocation
+makeLenses ''LintLocation
+
+data LintIssue = LintIssue { _severity    :: LintSeverity
+                           , _summary     :: T.Text
+                           , _priority    :: Int
+                           , _explanation :: T.Text
+                           , _location    :: LintLocation
                            }
     deriving (Eq, Show)
+
+makeLenses ''LintIssue
 
 data LintFormatter =
     NullLintFormatter -- ^ A formatter that doesn't output
@@ -71,21 +89,26 @@ data LintFormatter =
 data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
-data AppOpts = AppOpts { targets   :: Maybe [FilePath]
-                       , pattern   :: GlobPattern
-                       , formatter :: LintFormatter
-                       , verbose   :: Verbosity
+data AppOpts = AppOpts { _targets   :: Maybe [FilePath]
+                       , _pattern   :: GlobPattern
+                       , _formatter :: LintFormatter
+                       , _verbose   :: Verbosity
                        }
     deriving (Show, Eq)
 
-data AppEnv = AppEnv { opts         :: AppOpts
-                     , terminalSize :: Maybe (Terminal.Window Int)
+makeLenses ''AppOpts
+
+data AppEnv = AppEnv { _opts         :: AppOpts
+                     , _terminalSize :: Maybe (Terminal.Window Int)
                      }
+
+makeLenses ''AppEnv
+
 instance Default AppOpts where
-    def = AppOpts { targets = mempty
-                  , pattern = defaultLintResultsGlob
-                  , formatter = SimpleLintFormatter
-                  , verbose = Normal
+    def = AppOpts { _targets = mempty
+                  , _pattern = defaultLintResultsGlob
+                  , _formatter = SimpleLintFormatter
+                  , _verbose = Normal
                   }
 
 instance Stringable LintSeverity where
@@ -125,37 +148,37 @@ formatLintIssues :: LintFormatter -> [LintIssue] -> Reader AppEnv [Chunk T.Text]
 formatLintIssues NullLintFormatter _ = pure mempty
 formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
     where
-        sortedIssues = sortOn ((* (-1)) . priority) issues
+        sortedIssues = sortOn (((-1) *) . view priority) issues
 
         fmt :: LintIssue -> Reader AppEnv [Chunk T.Text]
         fmt i =
           sequence [ pure $ label i
-                   , pure $ chunk (" " <> summary i <> "\n") & bold
+                   , pure $ chunk (" " <> i ^. summary <> "\n") & bold
                    , pure $ chunk $ concat $ replicate 4 " "
-                   , pure $ chunk ( T.pack (filename $ location i)
-                                   <> fmtLine (line $ location i)
+                   , pure $ chunk ( T.pack (i ^. location . filename)
+                                   <> fmtLine (i ^. location . line)
                                    <> "\n"
                                     ) & underline & fore blue
                    , fmtExplanation i
                    ]
 
         fmtExplanation :: LintIssue -> Reader AppEnv (Chunk T.Text)
-        fmtExplanation i = ask >>= \env -> return $ case verbose $ opts env of
+        fmtExplanation i = ask >>= \env -> return $ case env ^. opts . verbose of
           Normal -> mempty
           Verbose -> chunk
             ( maybe
-              (explanation i <> "\n")
-              (\size -> indentWrap size 4 $ explanation i)
-              (terminalSize env)
+              (i ^. explanation <> "\n")
+              (\size -> indentWrap size 4 $ i ^. explanation)
+              (env ^. terminalSize)
             ) & faint
 
         fmtLine = maybe mempty ((":" <>) . show)
 
         label i = dye i ( "["
-                       <> T.take 1 (toText $ severity i)
+                       <> T.take 1 (toText $ i ^. severity)
                        <> "]" )
 
-        dye = (. chunk) . colorSeverity . severity
+        dye i j = colorSeverity (i ^. severity) (chunk j)
 
 atTag :: ArrowXml a => String -> a XmlTree XmlTree
 atTag tag = deep (isElem >>> hasName tag)
@@ -200,11 +223,11 @@ readLintIssues doc =
             priority' <- arr sread <<< getAttrValue "priority" -< i
             explanation' <- arr T.pack <<< getAttrValue "explanation" -< i
             location' <- parseLocation -< i
-            returnA -< LintIssue { severity = severity'
-                                 , summary = summary'
-                                 , explanation = explanation'
-                                 , priority = priority'
-                                 , location = location'
+            returnA -< LintIssue { _severity = severity'
+                                 , _summary = summary'
+                                 , _explanation = explanation'
+                                 , _priority = priority'
+                                 , _location = location'
                                  }
 
         parseLocation :: ArrowXml a => a XmlTree LintLocation
@@ -212,9 +235,9 @@ readLintIssues doc =
             filename' <- getAttrValue "file" -< l
             line' <- arr sreadMay <<< getAttrValue "line" -< l
             column' <- arr sreadMay <<< getAttrValue "column" -< l
-            returnA -< LintLocation { filename = filename'
-                                    , line = line'
-                                    , column = column'
+            returnA -< LintLocation { _filename = filename'
+                                    , _line = line'
+                                    , _column = column'
                                     }
 
         selectIssues :: ArrowXml a => a XmlTree XmlTree

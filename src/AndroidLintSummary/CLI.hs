@@ -6,25 +6,26 @@ module AndroidLintSummary.CLI where
 import           BasicPrelude                 hiding (fromString)
 
 import           AndroidLintSummary
+import           Control.Lens                 ((^.))
 import           Options.Applicative
 import           Rainbow
 
 import           Control.Monad.Reader         (runReader)
 import           Data.Default                 (def)
-import           Data.Version                 (Version(), showVersion)
 import           Data.Stringable              (Stringable (fromString, toString))
+import           Data.Version                 (Version (), showVersion)
 import           System.Directory             (getCurrentDirectory)
 
 import qualified System.Console.Terminal.Size as Terminal
 import qualified System.FilePath.Find         as Find
 
 findFilesFromArgs :: AppOpts -> IO [FilePath]
-findFilesFromArgs args' = go $ targets args'
+findFilesFromArgs args' = go $ args' ^. targets
   where
     go (Just names) = return names
     go Nothing = do
       dir <- getCurrentDirectory
-      Find.find Find.always (Find.filePath Find.~~? pattern args') dir
+      Find.find Find.always (Find.filePath Find.~~? (args' ^. pattern)) dir
 
 lintSummaryParser :: Version -> ParserInfo AppOpts
 lintSummaryParser version =
@@ -38,13 +39,13 @@ lintSummaryParser version =
         <*> strOption ( long "glob"
                      <> short 'g'
                      <> help "Glob pattern to select result files"
-                     <> value (pattern def)
+                     <> value (def ^. pattern)
                      <> showDefault )
         <*> ( fromString <$>
               strOption ( long "formatter"
                        <> short 'f'
                        <> help "Specify a formatter to use [simple|null]"
-                       <> value (toString . formatter $ def)
+                       <> value (toString $ def ^. formatter)
                        <> showDefault ) )
         <*> flag Normal Verbose ( long "verbose"
                                <> short 'v'
@@ -65,4 +66,4 @@ runCLI version = execParser (lintSummaryParser version) >>= run
         let env = AppEnv args' size
         files <- findFilesFromArgs args'
         lintIssues <- concat <$> forM files (openXMLFile >=> readLintIssues)
-        mapM_ putChunk $ runReader (formatLintIssues (formatter args') lintIssues) env
+        mapM_ putChunk $ runReader (formatLintIssues (args' ^. formatter) lintIssues) env

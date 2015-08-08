@@ -12,6 +12,7 @@ import           Test.QuickCheck.Property    hiding (verbose)
 
 import           AndroidLintSummary
 import           AndroidLintSummary.CLI
+import           Control.Lens                ((^.))
 import           Data.Stringable             (Stringable (toString, fromString))
 import           Data.Version                (makeVersion)
 import           System.Directory            (getCurrentDirectory)
@@ -64,13 +65,13 @@ main = hspec $ do
             length issues `shouldBe` 2
 
             let iss0 = head issues
-            severity iss0 `shouldBe` WarningSeverity
-            priority iss0 `shouldBe` 6
+            iss0 ^. severity `shouldBe` WarningSeverity
+            iss0 ^. priority `shouldBe` 6
 
-            let loc0 = location iss0
-            filename loc0 `shouldBe` "/home/pascal/Projects/java/Android-DirectoryChooser/library/build.gradle"
-            line loc0 `shouldBe` Just 25
-            column loc0 `shouldBe` Just 5
+            let loc0 = iss0 ^. location
+            loc0 ^. filename `shouldBe` "/home/pascal/Projects/java/Android-DirectoryChooser/library/build.gradle"
+            loc0 ^. line `shouldBe` Just 25
+            loc0 ^. column `shouldBe` Just 5
 
         it "reads a file with Information severity" $ do
             file <- liftIO . openFixture $ "3" </> "lint-results.xml"
@@ -78,7 +79,7 @@ main = hspec $ do
 
             length issues `shouldBe` 88
 
-            let infos = filter (\i -> severity i == InformationalSeverity) issues
+            let infos = filter (\i -> i ^. severity == InformationalSeverity) issues
             length infos `shouldBe` 3
 
     describe "CLI Argument parser" $ do
@@ -93,30 +94,30 @@ main = hspec $ do
         it "verbose mode" $ do
             let res = parse ["-v"]
             let (Just opts) = res
-            verbose opts `shouldBe` Verbose
+            opts ^. verbose `shouldBe` Verbose
 
         it "normal mode" $ do
             let res = parse [""]
             let (Just opts) = res
-            verbose opts `shouldBe` Normal
-            formatter opts `shouldBe` SimpleLintFormatter
+            opts ^. verbose `shouldBe` Normal
+            opts ^. formatter `shouldBe` SimpleLintFormatter
 
         it "glob" $ do
             let res = parse ["-g", "**/my/glob.*"]
             let (Just opts) = res
-            pattern opts `shouldBe` "**/my/glob.*"
+            opts ^. pattern `shouldBe` "**/my/glob.*"
 
         it "null formatter" $ do
             let res = parse ["-f", "null"]
             let (Just opts) = res
-            formatter opts `shouldBe` NullLintFormatter
+            opts ^. formatter `shouldBe` NullLintFormatter
 
         it "simple formatter" $ do
             let res = parse ["-f", "simple"]
             let (Just opts) = res
-            formatter opts `shouldBe` SimpleLintFormatter
+            opts ^. formatter `shouldBe` SimpleLintFormatter
 
         it "invalid formatter" $ do
             let res = parse ["-f", "invalid"]
             let (Just opts) = res
-            evaluate (formatter opts) `shouldThrow` errorCall "Invalid LintFormatter specification"
+            evaluate (opts ^. formatter) `shouldThrow` errorCall "Invalid LintFormatter specification"
