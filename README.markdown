@@ -56,7 +56,7 @@ Watch this ASCIICast to see it in action:
 Check out the [LintSummary Sample](https://github.com/passy/Android-LintSummarySample/)
 to see how to integrate this with your gradle build.
 
-If you copy this [gradle script](https://github.com/passy/Android-LintSummarySample/blob/c3b30a053053aafccec387aa2c6ef3e1276f0e52/gradle/lint-summary.gradle)
+If you copy this [gradle script](https://github.com/passy/Android-LintSummarySample/blob/d7403205fc423d5c42c5ded97756b6c5aca074e5/gradle/lint-summary.gradle)
 to your project, you can enable it with just one line per sub-project.
 
 ## `--help`
