@@ -25,7 +25,7 @@ Grab the latest build for your platform from the [releases page](https://github.
 
 If your platform isn't there, you can build it yourself with [stack](https://github.com/commercialhaskell/stack):
 
-```
+``` sh
 $ git clone https://github.com/passy/android-lint-summary
 $ cd android-lint-summary
 $ stack setup
@@ -34,7 +34,7 @@ $ stack install
 
 ## Using
 
-```
+``` sh
 $ cd my-android-project
 $ ./gradle lint
 # Search in your current working directory
