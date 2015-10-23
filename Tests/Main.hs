@@ -47,10 +47,6 @@ main = hspec $ do
         it "fromString . toString = id" . property $ do
           \x -> (fromString . toString) x == (x :: LintSeverity)
 
-    describe "LintSeverity" $ do
-        it "fromString . toString = id" . property $ do
-          \x -> (fromString . toString) x == (x :: LintSeverity)
-
     describe "XML Parser" $ do
         it "reads an empty file" $ do
             file <- liftIO . openFixture $ "0" </> "app" </> "build" </> "outputs" </> "lint-results.xml"
