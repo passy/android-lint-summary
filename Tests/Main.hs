@@ -44,12 +44,8 @@ openFixture path = do
 main :: IO ()
 main = hspec $ do
     describe "LintSeverity" $ do
-        it "fromString . toString = id" . property $ do
-          \x -> (fromString . toString) x == (x :: LintSeverity)
-
-    describe "LintSeverity" $ do
-        it "fromString . toString = id" . property $ do
-          \x -> (fromString . toString) x == (x :: LintSeverity)
+        it "toString . fromString = id" . property $ do
+          \x -> (toString . fromString) x == (x :: LintSeverity)
 
     describe "XML Parser" $ do
         it "reads an empty file" $ do
