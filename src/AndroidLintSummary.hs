@@ -200,11 +200,11 @@ indentWrap size indentation text = foldMap wrap lines'
                     in indent <> as <> "\n" <> wrap bs
 
 openXMLFile :: forall s b. FilePath -> IO (IOStateArrow s b XmlTree)
-openXMLFile filepath = readXMLFileHandle =<< getHandle filepath
+openXMLFile = (readXMLFileHandle =<<) . getHandle
   where
-    getHandle s
-      | s == "-"  = return stdin
-      | otherwise = openFile filepath ReadMode
+    getHandle filepath
+      | filepath == "-" = return stdin
+      | otherwise       = openFile filepath ReadMode
 
 
 readXMLFileHandle :: forall s b. Handle -> IO (IOStateArrow s b XmlTree)
