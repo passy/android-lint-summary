@@ -17,7 +17,7 @@ before_install:
   - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/
   - ls $HOME/.stack/snapshots/x86_64-linux/$SNAPSHOT_VERSION/$GHC_VERSION/
   - mkdir -p $HOME/bin
-  - curl -L "$STACK_RELEASE" | gzip -d > $HOME/bin/stack
+  - curl -L "$STACK_RELEASE" | tar -C "$HOME/bin" --strip=1 -xzf - stack-1.0.0-linux-x86_64/stack
   - chmod +x $HOME/bin/stack
 
 install:
