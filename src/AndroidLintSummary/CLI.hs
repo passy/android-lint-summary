@@ -25,7 +25,7 @@ findFilesFromArgs args' = go $ args' ^. targets
     go (Just names) = return names
     go Nothing = do
       dir <- getCurrentDirectory
-      Find.find Find.always (Find.filePath Find.~~? (args' ^. pattern)) dir
+      Find.find Find.always (Find.filePath Find.~~? (args' ^. glob)) dir
 
 lintSummaryParser :: Version -> ParserInfo AppOpts
 lintSummaryParser version =
@@ -39,7 +39,7 @@ lintSummaryParser version =
         <*> strOption ( long "glob"
                      <> short 'g'
                      <> help "Glob pattern to select result files"
-                     <> value (def ^. pattern)
+                     <> value (def ^. glob)
                      <> showDefault )
         <*> ( fromString <$>
               strOption ( long "formatter"

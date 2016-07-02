@@ -35,6 +35,7 @@ library
                      , lens
                      , mtl
                      , optparse-applicative
+                     , optparse-text
                      , rainbow
                      , stringable
                      , terminal-size
