@@ -173,7 +173,7 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
             ) & faint
 
         fmtLine :: Show a => Maybe a -> T.Text
-        fmtLine = maybe mempty ((":" <>) . show)
+        fmtLine = maybe mempty ((":" <>) . T.pack . show)
 
         label i = dye i ( "["
                        <> T.take 1 (toText $ i ^. severity)
@@ -193,7 +193,7 @@ sreadMay = readMay . T.pack
 indentWrap :: Terminal.Window Int -> Int -> T.Text -> T.Text
 indentWrap size indentation text = foldMap wrap lines'
   where
-    indent :: _
+    indent :: T.Text
     indent = concat $ replicate indentation " "
 
     lines' = filter (/= mempty) $ lines text
