@@ -1,6 +1,3 @@
-flags:
-  android-lint-summary: {}
 packages:
 - '.'
-extra-deps: []
-resolver: lts-6.4
+resolver: lts-7.2

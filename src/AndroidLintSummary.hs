@@ -26,7 +26,7 @@ module AndroidLintSummary (
 , explanation
 , location
 , formatter
-, pattern
+, glob
 , targets
 , verbose
 ) where
@@ -90,7 +90,7 @@ data Verbosity = Normal | Verbose
     deriving (Show, Eq)
 
 data AppOpts = AppOpts { _targets   :: Maybe [FilePath]
-                       , _pattern   :: GlobPattern
+                       , _glob      :: GlobPattern
                        , _formatter :: LintFormatter
                        , _verbose   :: Verbosity
                        }
@@ -106,7 +106,7 @@ makeLenses ''AppEnv
 
 instance Default AppOpts where
     def = AppOpts { _targets = mempty
-                  , _pattern = defaultLintResultsGlob
+                  , _glob = defaultLintResultsGlob
                   , _formatter = SimpleLintFormatter
                   , _verbose = Normal
                   }
@@ -172,7 +172,8 @@ formatLintIssues SimpleLintFormatter issues = concat <$> mapM fmt sortedIssues
               (env ^. terminalSize)
             ) & faint
 
-        fmtLine = maybe mempty ((":" <>) . show)
+        fmtLine :: Show a => Maybe a -> T.Text
+        fmtLine = maybe mempty ((":" <>) . T.pack . show)
 
         label i = dye i ( "["
                        <> T.take 1 (toText $ i ^. severity)
@@ -192,8 +193,10 @@ sreadMay = readMay . T.pack
 indentWrap :: Terminal.Window Int -> Int -> T.Text -> T.Text
 indentWrap size indentation text = foldMap wrap lines'
   where
-    lines' = filter (/= mempty) $ lines text
+    indent :: T.Text
     indent = concat $ replicate indentation " "
+
+    lines' = filter (/= mempty) $ lines text
     wrap t
       | t == mempty = mempty
       | otherwise = let (as, bs) = T.splitAt (Terminal.width size - indentation) t
