@@ -84,7 +84,7 @@ main = hspec $ do
         let defaultPrefs = prefs mempty
         let parse args = getParseResult $ execParserPure defaultPrefs parser args
 
-        it "doesn't run the app when querying the version" $ do
+        it "doesn't run the app when querying the version" $
             parse ["-V"] `shouldBe` Nothing
 
         it "verbose mode" $ do
@@ -101,7 +101,7 @@ main = hspec $ do
         it "glob" $ do
             let res = parse ["-g", "**/my/glob.*"]
             let (Just opts) = res
-            opts ^. pattern `shouldBe` "**/my/glob.*"
+            opts ^. glob `shouldBe` "**/my/glob.*"
 
         it "null formatter" $ do
             let res = parse ["-f", "null"]
